@@ -1,0 +1,14 @@
+@import '../helpers/mixin';
+@import './form';
+
+.container {
+  @include flexboxInit;
+  width: 100%;
+  min-height: calc(100vh - 60px);
+  margin-top: 60px;
+}
+
+.container__item {
+  @include flexboxInit(column);
+  padding: 10vh 5vw;
+}

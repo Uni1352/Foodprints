@@ -1,0 +1,44 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Source Code Pro', '微軟正黑體', monospace;
+}
+
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+h2 {
+  font-size: 1.5em;
+  margin-bottom: 5vh;
+  color: darkgreen;
+}
+
+p {
+  line-height: 2.5em;
+}
+
+a {
+  color: green;
+  text-decoration: none;
+
+  &:hover {
+    color: limegreen;
+    transition: color, 0.3s;
+  }
+}
+
+ul {
+  list-style-type: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+  height: auto;
+}

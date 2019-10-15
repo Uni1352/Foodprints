@@ -1,0 +1,10 @@
+@mixin borderStyle($color:black) {
+  border: 3px solid $color;
+}
+
+@mixin flexboxInit($direction:row, $mainAxis:flex-start, $crossAxis:stretch) {
+  display: flex;
+  flex-flow: $direction wrap;
+  justify-content: $mainAxis;
+  align-items: $crossAxis;
+}
