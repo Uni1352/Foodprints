@@ -1,4 +1,6 @@
 @import '../helpers/mixin';
+@import '../modules/button';
+@import '../modules/menu';
 @import './form';
 
 .container {
@@ -10,5 +12,6 @@
 
 .container__item {
   @include flexboxInit(column);
+  width: 100%;
   padding: 10vh 5vw;
 }

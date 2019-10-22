@@ -35,6 +35,16 @@ img {
   display: block;
   height: auto; }
 
+.menu {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  height: 60px; }
+
+.menu__item {
+  padding: 5px 15px; }
+
 nav {
   display: flex;
   flex-flow: row wrap;
@@ -55,6 +65,30 @@ nav {
 header {
   width: 100%; }
 
+.btn {
+  width: 130px;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 5px;
+  background-color: rgba(200, 200, 200, 0.25);
+  border: 1px solid #7a7a7a;
+  cursor: pointer; }
+  .btn a {
+    display: block;
+    color: black; }
+  .btn:hover {
+    background-color: rgba(133, 133, 133, 0.25); }
+
+.menu {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  height: 60px; }
+
+.menu__item {
+  padding: 5px 15px; }
+
 form {
   display: flex;
   flex-flow: column wrap;
@@ -68,10 +102,15 @@ input {
   border-radius: 5px;
   background-color: rgba(200, 200, 200, 0.25);
   border: 1px solid #7a7a7a; }
-  input[type='submit'] {
+  input[type="submit"], input[type="button"] {
     width: 15vh;
     margin: 15px auto;
     cursor: pointer; }
+    input[type="submit"]:hover, input[type="button"]:hover {
+      background-color: silver; }
+
+label {
+  margin: 5px 0; }
 
 .container {
   display: flex;
@@ -87,4 +126,5 @@ input {
   flex-flow: column wrap;
   justify-content: flex-start;
   align-items: stretch;
+  width: 100%;
   padding: 10vh 5vw; }

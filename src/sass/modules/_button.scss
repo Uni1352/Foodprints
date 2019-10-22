@@ -1,0 +1,18 @@
+.btn {
+  width: 130px;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 5px;
+  background-color: rgba(200, 200, 200, 0.25);
+  border: 1px solid rgb(122, 122, 122);
+  cursor: pointer;
+
+  & a {
+    display: block;
+    color: black;
+  }
+
+  &:hover {
+    background-color: rgba(133, 133, 133, 0.25);
+  }
+}

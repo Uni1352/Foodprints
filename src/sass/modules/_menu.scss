@@ -1,0 +1,10 @@
+@import '../helpers/mixin';
+
+.menu {
+  @include flexboxInit(row, center, center);
+  height: 60px;
+}
+
+.menu__item {
+  padding: 5px 15px;
+}

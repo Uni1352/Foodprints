@@ -12,9 +12,18 @@ input {
   background-color: rgba(200, 200, 200, 0.25);
   border: 1px solid rgb(122, 122, 122);
 
-  &[type='submit'] {
+  &[type="submit"],
+  &[type="button"] {
     width: 15vh;
     margin: 15px auto;
     cursor: pointer;
+
+    &:hover {
+      background-color: silver;
+    }
   }
+}
+
+label {
+  margin: 5px 0;
 }
