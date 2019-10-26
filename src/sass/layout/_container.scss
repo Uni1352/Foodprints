@@ -1,7 +1,9 @@
 @import '../helpers/mixin';
 @import '../modules/button';
 @import '../modules/menu';
+@import '../modules/card';
 @import './form';
+@import './table';
 
 .container {
   @include flexboxInit;

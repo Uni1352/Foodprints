@@ -1,0 +1,16 @@
+table {
+  width: 100%;
+}
+
+thead,
+tfoot {
+  background-color: darkgreen;
+  color: white;
+}
+
+td {
+  padding: 10px;
+  font-weight: 600;
+  font-size: 1.05em;
+  font-family: 'monospace', '微軟正黑體';
+}

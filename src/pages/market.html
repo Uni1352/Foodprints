@@ -3,27 +3,149 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>蔬果足跡-蔬果訂購</title>
   <link rel="stylesheet" href="../../dist/css/style.css">
+  <link rel="stylesheet" href="../../dist/css/shoppingcart.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   </head>
 
   <body>
     <header>
       <nav>
         <div class="logo">
-          <a href="#">
+          <a href="./member.html">
             <img src="../img/logo.jpg" alt="Back To Home">
           </a>
         </div>
         <ul class="menu">
           <a href="#">
-            <li class="menu__item">登入</li>
+            <li class="menu__item">登出</li>
           </a>
         </ul>
       </nav>
     </header>
     <div class="container" style="background-image: url('../img/geometry2.png');background-repeat: auto;">
-      <div class="container__item">
+      <div class="container__item" style="margin: 0 15vw;">
+        <h2>蔬果訂購</h2>
+        <div id="foodselect">
+          <div class="card">
+            <div class="card__item">
+              <img src="../img/Artboard – 1.png" alt="">
+              <h3>番茄</h3>
+            </div>
+            <div class="card__item">
+              <img src="../img/Artboard – 2.png" alt="">
+              <h3>玉米</h3>
+            </div>
+            <div class="card__item">
+              <img src="../img/Artboard – 3.png" alt="">
+              <h3>南瓜</h3>
+            </div>
+            <div class="card__item">
+              <img src="../img/Artboard – 4.png" alt="">
+              <h3>紅蘿蔔</h3>
+            </div>
+            <div class="card__item">
+              <img src="../img/Artboard – 5.png" alt="">
+              <h3>小黃瓜</h3>
+            </div>
+            <div class="card__item">
+              <img src="../img/Artboard – 6.png" alt="">
+              <h3>葡萄</h3>
+            </div>
+          </div>
+        </div>
+        <div id="positionselect">
+          <table cellpadding="10px">
+            <col width="40%">
+            <col width="15%">
+            <col width="15%">
+            <col width="10%">
+            <col width="15%">
+            <col width="5%">
+            <thead>
+              <tr>
+                <th>位置</th>
+                <th>總數量(kg)</th>
+                <th>價格<br />(元/kg)</th>
+                <th>距離(km)</th>
+                <th>碳足跡(kg)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>我是位置A</td>
+                <td>150</td>
+                <td>100</td>
+                <td>我是距離A</td>
+                <td>10</td>
+                <td><button class="btn--icon"><i class="fas fa-plus"></i></button></td>
+              </tr>
+              <tr>
+                <td>我是位置B</td>
+                <td>200</td>
+                <td>110</td>
+                <td>我是距離B</td>
+                <td>20</td>
+                <td><button class="btn--icon"><i class="fas fa-plus"></i></button></td>
+              </tr>
+              <tr>
+                <td>我是位置C</td>
+                <td>100</td>
+                <td>90</td>
+                <td>我是距離C</td>
+                <td>30</td>
+                <td><button class="btn--icon"><i class="fas fa-plus"></i></button></td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="text-align: center;">
+            <span><button class="btn">選擇其他蔬果</button></span>
+            <span><button class="btn">我要結帳</button></span>
+          </div>
+        </div>
+        <div id="ordercomfirm">
+          <table cellpadding="10px">
+            <col width="70%">
+            <col width="15%">
+            <col width="15%">
+            <thead>
+              <tr>
+                <th>名稱</th>
+                <th>數量(kg)</th>
+                <th>總金額(元)</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <br>
+          <h3>總金額：&nbsp;<span id="totalCost"></span>&nbsp;元</h3>
+          <h3>總碳足跡：&nbsp;<span id="totalCO2"></span>&nbsp;kg</h3>
+          <div style="text-align: center;">
+            <span><button class="btn">取消訂購</button></span>
+            <span><button class="btn">確認訂購</button></span>
+          </div>
+        </div>
+      </div>
+      <!-- TODO: 購物車 -->
+      <div class="shoppingcart">
+        <div class="shoppingcart__button">
+          <i class="fas fa-shopping-cart fa-2x" style="color: rgb(95, 95, 95)"></i>
+        </div>
+        <div class="shoppingcart__list" style="display: none;">
+        </div>
+      </div>
+      <!-- TODO: 新增到購物車：物品名稱、數量、金額、加入購物車按鈕 -->
+      <div class="addItems" style="display: none;">
+        <h3>名稱：<span></span></h3>
+        <h3>數量：<select></select>&nbsp;kg</h3>
+        <div style="display: flex">
+          <button>取消</button>
+          <button>加入購物車</button>
+        </div>
       </div>
     </div>
+    <script src="../js/market.js"></script>
   </body>
 
   </html>

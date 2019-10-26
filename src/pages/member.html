@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>蔬果足跡-會員</title>
+  <title>蔬果足跡</title>
   <link rel="stylesheet" href="../../dist/css/style.css">
 </head>
 
@@ -13,27 +13,30 @@
   <header>
     <nav>
       <div class="logo">
-        <a href="#">
+        <a href="./member.html">
           <img src="../img/logo.jpg" alt="Back To Home">
         </a>
       </div>
     </nav>
   </header>
   <div class="container" style="background-image: url('../img/geometry2.png');background-repeat: auto;">
-    <div class="container__item" style="flex-flow: row wrap;justify-content:center;">
-      <span style="display: flex; flex-flow: column wrap;margin: 0 10vw">
-        <a href="./settings.html"><button class="btn">基本資料設定</button></a>
-        <a href="./account.html"><button class="btn">密碼修改</button></a>
-        <a href="#"><button class="btn">登出</button></a>
-      </span>
-      <span style="display: flex; flex-flow: column wrap;margin: 0 10vw">
-        <!-- 餐廳 -->
-        <a href="./market.html"><button class="btn">蔬果訂購</button></a>
-        <a href="./history.html"><button class="btn">訂購列表</button></a>
-        <!-- 小農 -->
-        <!-- TODO: 更換名稱 -->
-        <a href="./route.html"><button class="btn">路徑規劃路線圖</button></a>
-        <button class="btn">運送紀錄</button></span>
+    <div class="container__item" style="align-items: center;">
+      <a href="./settings.html"><button class="btn">基本資料設定</button></a>
+      <a href="./account.html"><button class="btn">密碼修改</button></a>
+      <!-- 餐廳 -->
+      <div>
+        <a href="./market.html"><button class="btn">蔬果訂購</button></a><br>
+        <a href="./history.html"><button class="btn">訂購紀錄</button></a>
+      </div>
+      <!-- 小農 -->
+      <div>
+        <a href="./vehicle.html"><button class="btn">運送路線圖</button></a><br>
+      </div>
+      <!-- 管理員 -->
+      <div>
+        <a href="./routes.html"><button class="btn">總路線圖</button></a>
+      </div>
+      <a href="#"><button class="btn">登出</button></a>
     </div>
   </div>
 </body>

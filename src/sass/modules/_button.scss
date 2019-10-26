@@ -5,6 +5,7 @@
   border-radius: 5px;
   background-color: rgba(200, 200, 200, 0.25);
   border: 1px solid rgb(122, 122, 122);
+  text-align: center;
   cursor: pointer;
 
   & a {
@@ -15,4 +16,13 @@
   &:hover {
     background-color: rgba(133, 133, 133, 0.25);
   }
+}
+
+.btn--icon {
+  padding: 10px;
+  margin: 15px 0;
+  border-radius: 5px;
+  background-color: rgba(200, 200, 200, 0.25);
+  border: 1px solid rgb(122, 122, 122);
+  cursor: pointer;
 }

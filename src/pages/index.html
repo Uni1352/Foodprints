@@ -10,16 +10,31 @@
 </head>
 
 <body>
+  <!-- TODO: 等登入系統完成後與 member.html 合併 -->
   <header>
     <nav>
       <div class="logo">
-        <a href="#">
+        <a href="./index.html">
           <img src="../img/logo.jpg" alt="Back To Home">
         </a>
       </div>
     </nav>
   </header>
   <div class="container" style="background-image: url('../img/geometry2.png');background-repeat: auto;">
+    <div class="container__item" style="width: 50%;background-color: rgba(192, 192, 192, 0.5);justify-content: center;">
+      <h2>Lorem, ipsum dolor.</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque sed nisi temporibus quis consequatur! Dolorum
+        quis corporis cupiditate inventore repellat voluptate beatae quaerat saepe non.</p>
+    </div>
+    <div class="container__item" style="width: 50%;justify-content: center;">
+      <form action="#" method="POST">
+        <input type="text" name="userName" id="username" placeholder="Your Name">
+        <input type="email" name="userEmail" id="useremail" placeholder="Your E-mail">
+        <input type="password" name="userPassword" id="userpassword" placeholder="Your Password">
+        <span>Have an Account?&nbsp;<a href="./login.html">Login</a></span>
+        <input type="submit" value="註冊">
+      </form>
+    </div>
   </div>
 </body>
 

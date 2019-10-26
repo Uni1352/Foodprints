@@ -9,19 +9,44 @@
     <header>
       <nav>
         <div class="logo">
-          <a href="#">
+          <a href="./member.html">
             <img src="../img/logo.jpg" alt="Back To Home">
           </a>
         </div>
         <ul class="menu">
           <a href="#">
-            <li class="menu__item">登入</li>
+            <li class="menu__item">登出</li>
           </a>
         </ul>
       </nav>
     </header>
     <div class="container" style="background-image: url('../img/geometry2.png');background-repeat: auto;">
-      <div class="container__item">
+      <div class="container__item" style="margin: 0 15vw;">
+        <h2>訂購紀錄</h2>
+        <!-- TODO: 換成放大鏡 icon -->
+        <form action="#" style="flex-direction: row;">
+          <input type="text" name="search" style="width: 80%;">
+          <input type="submit" value="搜尋" style="width: 15%;">
+        </form>
+        <!-- TODO: 表格欄位資料 -->
+        <table cellpadding="10px">
+          <col width="20%">
+          <col width="35%">
+          <col width="15%">
+          <col width="15%">
+          <col width="15%">
+          <thead>
+            <tr>
+              <th>日期</th>
+              <th>名稱</th>
+              <th>數量(kg)</th>
+              <th>金額(元)</th>
+              <th>碳足跡(kg)</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+          <tfoot></tfoot>
+        </table>
       </div>
     </div>
   </body>
