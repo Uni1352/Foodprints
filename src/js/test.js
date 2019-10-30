@@ -1,7 +1,7 @@
+/* eslint-disable no-undef */
 class Food {
   constructor() {
-    this.foodname = '';
-    this.farmer = '';
+    this.name = '';
     this.quantity = 0;
     this.price = 0;
   }
@@ -9,21 +9,20 @@ class Food {
 
 let order = [];
 let list = ['', '', 0, 0];
-let seq = 0;
-let totalPrice = 0;
+let id = 0;
+let totalCost = 0;
 
-$(document).ready(() => {
-  $('#positionselect').hide();
-  $('#ordercomfirm').hide();
-});
+$(document).ready(marketInit);
 
-$('.card__item').click(function () {
+// foodselect
+$('#foodselect').on('click', '.card__item', function () {
   list[0] = $(this).children('h3').text();
 
   $('#foodselect').hide();
   $('#positionselect').fadeIn(500);
 });
 
+// positionselect
 $('#positionselect').on('click', '.btn--icon', function () {
   const index = $('.btn--icon').index($(this));
 
@@ -35,13 +34,13 @@ $('#positionselect').on('click', '.btn--icon', function () {
     .eq(2)
     .text(), 10);
   list[3] = parseInt($('tbody').children().eq(index).children()
-    .eq(3)
+    .eq(4)
     .text(), 10);
 
   // 彈出詢問視窗
   $('.addItems').children().eq(0).children()
     .text(list[0]);
-  for (let i = 1; i <= list[2]; i += 1) {
+  for (let i = 1; i <= list[1]; i += 1) {
     $('<option>').text(i).appendTo('select');
   }
   $('.addItems').fadeIn(100);
@@ -53,36 +52,34 @@ $('.addItems').on('click', 'button', function () {
 
   if (index === 1) {
     // 取得選取的蔬果數量
-    list[2] = parseInt($('select :selected').text(), 10);
+    list[1] = parseInt($('select :selected').text(), 10);
 
     // 新增 order 物件
     order.push(new Food());
-    order[seq].foodname = list[0];
-    order[seq].farmer = list[1];
-    order[seq].quantity = list[2];
-    order[seq].price = list[2] * list[3];
+    order[id].name = list[0];
+    order[id].quantity = list[1];
+    order[id].price = list[2] * list[1];
 
     // 放進購物車
     $('.shoppingcart__list').append(
       `<div class="shoppingcart__listitem">  
-        <div style="display:flex;justify-content:space-between;align-items: center;"> 
-          <button class="btn--icon delete"><i class="fas fa-times"></i></button>&nbsp;&nbsp;                     
-          <p><span>${order[seq].foodname}</span></p>
-        </div>
-        <p><span>${order[seq].quantity}</span>&nbsp;kg</p>
-        <p><span>${order[seq].price}</span>&nbsp;元</p>              
-      </div>`
+                <div style="display:flex;justify-content:space-between;align-items: center;">              
+                    <button class="delete"><i class="fas fa-times"></i></button>                     
+                    <p><span>${order[id].name}</span></p>
+                </div>
+                <p><span>${order[id].quantity}</span>&nbsp;kg</p>
+                <p><span>${order[id].price}</span>&nbsp;元</p>              
+            </div>`
     );
   }
-  seq += 1;
+  id += 1;
 
   $('.addItems').fadeOut(100);
 });
 
 // 刪除列表物件
 $('.shoppingcart__list').on('click', '.delete', function () {
-  const index = $(this).parent().parent().index();
-
+  const index = $('.shoppingcart__list .shoppingcart__listitem').index($(this).parent().parent());
   $(this).parent().parent().remove();
   order.splice(index, 1);
 });
@@ -102,8 +99,7 @@ $('#positionselect').on('click', '.btn', function () {
       order.forEach((item) => {
         $('#ordercomfirm tbody').append(
           `<tr>  
-              <td>${item.foodname}</td>
-              <td>${item.farmer}</td>
+              <td>${item.name}</td>
               <td>${item.quantity}</td>
               <td>${item.price}</td>               
             </tr>`
@@ -112,9 +108,9 @@ $('#positionselect').on('click', '.btn', function () {
 
       // 計算總金額
       for (let i = 0; i < order.length; i += 1) {
-        totalPrice += order[i].price;
+        totalCost += order[i].price;
       }
-      $('#totalCost').text(totalPrice);
+      $('#totalCost').text(totalCost);
       break;
     default:
       break;
@@ -139,13 +135,13 @@ $('#ordercomfirm').on('click', '.btn', function () {
   if (index === 3) {
     // alert
     alert('訂購成功!!!');
-    console.log(order);
   }
 
   // 歸零
-  seq = 0;
+  id = 0;
   order = [];
-  list = ['', '', 0, 0];
+  totalCarbon = 0;
+  list = ['', 0, 0, 0];
   $('.shoppingcart__list').empty();
   $('#ordercomfirm tbody').empty();
 

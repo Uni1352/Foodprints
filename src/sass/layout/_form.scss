@@ -22,6 +22,10 @@ input {
       background-color: silver;
     }
   }
+
+  &[type="radio"] {
+    margin: 0 15px;
+  }
 }
 
 label {

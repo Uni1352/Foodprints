@@ -56,44 +56,39 @@
         </div>
         <div id="positionselect">
           <table cellpadding="10px">
+            <col width="20%">
             <col width="40%">
             <col width="15%">
-            <col width="15%">
-            <col width="10%">
             <col width="15%">
             <col width="5%">
             <thead>
               <tr>
+                <th>小農名稱</th>
                 <th>位置</th>
                 <th>總數量(kg)</th>
-                <th>價格<br />(元/kg)</th>
-                <th>距離(km)</th>
-                <th>碳足跡(kg)</th>
+                <th>單價<br />(元/kg)</th>
               </tr>
             </thead>
             <tbody>
               <tr>
+                <td>A</td>
                 <td>我是位置A</td>
                 <td>150</td>
                 <td>100</td>
-                <td>我是距離A</td>
-                <td>10</td>
                 <td><button class="btn--icon"><i class="fas fa-plus"></i></button></td>
               </tr>
               <tr>
+                <td>B</td>
                 <td>我是位置B</td>
                 <td>200</td>
                 <td>110</td>
-                <td>我是距離B</td>
-                <td>20</td>
                 <td><button class="btn--icon"><i class="fas fa-plus"></i></button></td>
               </tr>
               <tr>
+                <td>C</td>
                 <td>我是位置C</td>
                 <td>100</td>
                 <td>90</td>
-                <td>我是距離C</td>
-                <td>30</td>
                 <td><button class="btn--icon"><i class="fas fa-plus"></i></button></td>
               </tr>
             </tbody>
@@ -105,28 +100,28 @@
         </div>
         <div id="ordercomfirm">
           <table cellpadding="10px">
-            <col width="70%">
-            <col width="15%">
-            <col width="15%">
+            <col width="30%">
+            <col width="30%">
+            <col width="20%">
+            <col width="20%">
             <thead>
               <tr>
-                <th>名稱</th>
+                <th>蔬果名稱</th>
+                <th>小農名稱</th>
                 <th>數量(kg)</th>
-                <th>總金額(元)</th>
+                <th>金額(元)</th>
               </tr>
             </thead>
             <tbody></tbody>
           </table>
           <br>
           <h3>總金額：&nbsp;<span id="totalCost"></span>&nbsp;元</h3>
-          <h3>總碳足跡：&nbsp;<span id="totalCO2"></span>&nbsp;kg</h3>
           <div style="text-align: center;">
             <span><button class="btn">取消訂購</button></span>
             <span><button class="btn">確認訂購</button></span>
           </div>
         </div>
       </div>
-      <!-- TODO: 購物車 -->
       <div class="shoppingcart">
         <div class="shoppingcart__button">
           <i class="fas fa-shopping-cart fa-2x" style="color: rgb(95, 95, 95)"></i>
@@ -134,7 +129,6 @@
         <div class="shoppingcart__list" style="display: none;">
         </div>
       </div>
-      <!-- TODO: 新增到購物車：物品名稱、數量、金額、加入購物車按鈕 -->
       <div class="addItems" style="display: none;">
         <h3>名稱：<span></span></h3>
         <h3>數量：<select></select>&nbsp;kg</h3>

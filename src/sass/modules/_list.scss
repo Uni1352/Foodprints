@@ -1,0 +1,49 @@
+@import '../helpers/mixin';
+
+.list {
+  z-index: 3;
+  width: 25%;
+  height: calc(100vh - 60px);
+  background-color: white;
+  box-shadow: 2px 0px 3px rgba(20%, 20%, 40%, 0.5);
+  overflow-y: auto;
+}
+
+.dropdown {
+  @include flexboxInit(row, flex-start, center);
+  padding: 15px;
+  background-color: silver;
+
+  & h3,
+  & h4 {
+    text-indent: 1em;
+  }
+
+  &:hover {
+    background-color: lightgray;
+    cursor: pointer;
+  }
+}
+
+.order__item {
+  & .dropdown {
+    @extend .dropdown;
+    padding: 10px 25px;
+    background-color: white;
+
+    &:hover {
+      background-color: rgba(206, 206, 206, 0.397);
+    }
+  }
+
+  &>div:nth-child(2) {
+    padding: 10px;
+    margin-left: 25px;
+    border-bottom: 3px solid silver;
+
+    &:first-child,
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}
