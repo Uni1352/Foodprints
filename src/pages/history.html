@@ -1,54 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>蔬果足跡-訂購紀錄</title>
   <link rel="stylesheet" href="../../dist/css/style.css">
-  </head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
 
-  <body>
-    <header>
-      <nav>
-        <div class="logo">
-          <a href="./member.html">
-            <img src="../img/logo.jpg" alt="Back To Home">
-          </a>
-        </div>
-        <ul class="menu">
-          <a href="#">
-            <li class="menu__item">登出</li>
-          </a>
-        </ul>
-      </nav>
-    </header>
-    <div class="container" style="background-image: url('../img/geometry2.png');background-repeat: auto;">
-      <div class="container__item" style="margin: 0 15vw;">
-        <h2>訂購紀錄</h2>
-        <!-- TODO: 換成放大鏡 icon -->
-        <form action="#" style="flex-direction: row;">
-          <input type="text" name="search" style="width: 80%;">
-          <input type="submit" value="搜尋" style="width: 15%;">
-        </form>
-        <!-- TODO: 表格欄位資料 -->
-        <table cellpadding="10px">
-          <col width="20%">
-          <col width="20%">
-          <col width="30%">
-          <col width="15%">
-          <col width="15%">
-          <thead>
-            <tr>
-              <th>日期</th>
-              <th>蔬果名稱</th>
-              <th>小農名稱</th>
-              <th>數量(kg)</th>
-              <th>金額(元)</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-          <tfoot></tfoot>
-        </table>
+<body>
+  <header>
+    <nav>
+      <div class="logo">
+        <a href="./member.html">
+          <img src="../img/logo.jpg" alt="Back To Home">
+        </a>
       </div>
+      <ul class="menu">
+        <a href="#">
+          <li class="menu__item">登出</li>
+        </a>
+      </ul>
+    </nav>
+  </header>
+  <div class="container" style="background-image: url('../img/geometry2.png');background-repeat: auto;">
+    <div class="container__item" style="margin: 0 15vw;">
+      <h2>訂購紀錄</h2>
+      <!-- TODO: 換成放大鏡 icon -->
+      <!-- <form action="#" style="flex-direction: row;">
+        <input type="text" name="search" style="width: 80%;">
+        <input type="submit" value="搜尋" style="width: 15%;">
+      </form> -->
+      <!-- TODO: 表格欄位資料 -->
+      <table cellpadding="10px">
+        <col width="20%">
+        <col width="20%">
+        <col width="30%">
+        <col width="15%">
+        <col width="15%">
+        <thead>
+          <tr>
+            <th>日期</th>
+            <th>蔬果名稱</th>
+            <th>小農名稱</th>
+            <th>數量(kg)</th>
+            <th>金額(元)</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+        <tfoot></tfoot>
+      </table>
     </div>
-  </body>
+  </div>
+  <script src="../js/orders.js"></script>
+</body>
 
-  </html>
+</html>

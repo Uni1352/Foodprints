@@ -1,3 +1,7 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -6,79 +10,39 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
     integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  </head>
+</head>
 
-  <body>
-    <header>
-      <nav>
-        <div class="logo">
-          <a href="./member.html">
-            <img src="../img/logo.jpg" alt="Back To Home">
-          </a>
+<body>
+  <header>
+    <nav>
+      <div class="logo">
+        <a href="./member.html">
+          <img src="../img/logo.jpg" alt="Back To Home">
+        </a>
+      </div>
+      <ul class="menu">
+        <a href="#">
+          <li class="menu__item">登出</li>
+        </a>
+      </ul>
+    </nav>
+  </header>
+  <div class="container" style="background-image: url('../img/geometry2.png');background-repeat: auto;">
+    <div class="container__item" style="padding:0;">
+      <div class="sidebar">
+        <div id="routes">
+          <div class="list"></div>
+          <div class="tag">路線</div>
         </div>
-        <ul class="menu">
-          <a href="#">
-            <li class="menu__item">登出</li>
-          </a>
-        </ul>
-      </nav>
-    </header>
-    <div class="container" style="background-image: url('../img/geometry2.png');background-repeat: auto;">
-      <div class="container__item" style="flex-flow: row wrap;padding:0">
-        <div class="list">
-          <div class="list__item">
-            <div class="dropdown">
-              <i class="fa fa-chevron-right"></i>
-              <h3>route 01</h3>
-            </div>
-            <div class="order">
-              <div class="order__item">
-                <div class="dropdown">
-                  <i class="fa fa-angle-right"></i>
-                  <h4>訂單 01</h4>
-                </div>
-                <div>
-                  <p>訂購人：Uni</p>
-                  <p>訂購日期：2019.09.25</p>
-                  <p>訂購內容：Tempore, totam ut!</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="list__item">
-            <div class="dropdown">
-              <i class="fa fa-chevron-right"></i>
-              <h3>route 02</h3>
-            </div>
-            <div class="order">
-              <div class="order__item">
-                <div class="dropdown">
-                  <i class="fa fa-angle-right"></i>
-                  <h4>訂單 01</h4>
-                </div>
-                <div>
-                  <p>訂購人：JC</p>
-                  <p>訂購日期：2019.09.25</p>
-                  <p>訂購內容：Tempore, totam ut!</p>
-                </div>
-              </div>
-              <div class="order__item">
-                <div class="dropdown">
-                  <i class="fa fa-angle-right"></i>
-                  <h4>訂單 02</h4>
-                </div>
-                <div>
-                  <p>訂購人：jj9718</p>
-                  <p>訂購日期：2019.09.25</p>
-                  <p>訂購內容：Tempore, totam ut!</p>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div id="orders">
+          <div class="list"></div>
+          <div class="tag">訂單</div>
         </div>
       </div>
     </div>
-    <script src="../js/dropdown.js"></script>
-  </body>
+  </div>
+  <script src="../js/dropdown.js"></script>
+  <script src="../js/routes.js"></script>
+</body>
 
-  </html>
+</html>

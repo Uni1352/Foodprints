@@ -1,18 +1,14 @@
 @import '../helpers/mixin';
 
-.list {
-  z-index: 3;
-  width: 25%;
-  height: calc(100vh - 60px);
-  background-color: white;
-  box-shadow: 2px 0px 3px rgba(20%, 20%, 40%, 0.5);
-  overflow-y: auto;
+.sidebar {
+  position: relative;
+  width: 25vw;
 }
 
 .dropdown {
   @include flexboxInit(row, flex-start, center);
   padding: 15px;
-  background-color: silver;
+  background-color: rgb(230, 230, 230);
 
   & h3,
   & h4 {
@@ -26,24 +22,73 @@
 }
 
 .order__item {
+  background-color: rgba(206, 206, 206, 0.603);
+
   & .dropdown {
     @extend .dropdown;
     padding: 10px 25px;
     background-color: white;
 
     &:hover {
-      background-color: rgba(206, 206, 206, 0.397);
+      background-color: rgba(206, 206, 206, 0.603);
     }
   }
+}
 
-  &>div:nth-child(2) {
-    padding: 10px;
-    margin-left: 25px;
-    border-bottom: 3px solid silver;
+.order__content {
+  padding: 10px;
+  margin-left: 25px;
+  line-height: 1.25em;
+}
 
-    &:first-child,
-    &:last-child {
-      border-bottom: none;
+#routes {
+  @include flexboxInit(row);
+
+  & .list {
+    width: 260px;
+    height: calc(100vh - 60px);
+    background-color: white;
+    box-shadow: 2px 0px 3px rgba(20%, 20%, 40%, 0.5);
+    overflow-y: auto;
+  }
+
+  & .tag {
+    position: absolute;
+    top: 10px;
+    left: 260px;
+    width: 50px;
+    height: 100px;
+    border-radius: 0 5px 5px 0;
+    box-shadow: 2px 2px 3px rgba(20%, 20%, 40%, 0.5);
+    background-color: white;
+    font-size: 1.05em;
+    text-align: center;
+    line-height: 50px;
+    writing-mode: vertical-lr;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+#orders {
+  @extend #routes;
+
+  & .tag {
+    top: 110px;
+    background-color: rgba(211, 211, 211, 0.75);
+  }
+
+  & .list__item {
+    & .dropdown {
+      @extend .dropdown;
+      padding: 10px 25px;
+    }
+
+    & div:nth-child(2) {
+      @extend .order__content;
+      background-color: white;
     }
   }
 }

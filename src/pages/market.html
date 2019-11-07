@@ -1,3 +1,7 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -6,139 +10,139 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
     integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  </head>
+</head>
 
-  <body>
-    <header>
-      <nav>
-        <div class="logo">
-          <a href="./member.html">
-            <img src="../img/logo.jpg" alt="Back To Home">
-          </a>
-        </div>
-        <ul class="menu">
-          <a href="#">
-            <li class="menu__item">登出</li>
-          </a>
-        </ul>
-      </nav>
-    </header>
-    <div class="container" style="background-image: url('../img/geometry2.png');background-repeat: auto;">
-      <div class="container__item" style="margin: 0 15vw;">
-        <h2>蔬果訂購</h2>
-        <div id="foodselect">
-          <div class="card">
-            <div class="card__item">
-              <img src="../img/Artboard – 1.png" alt="">
-              <h3>番茄</h3>
-            </div>
-            <div class="card__item">
-              <img src="../img/Artboard – 2.png" alt="">
-              <h3>玉米</h3>
-            </div>
-            <div class="card__item">
-              <img src="../img/Artboard – 3.png" alt="">
-              <h3>南瓜</h3>
-            </div>
-            <div class="card__item">
-              <img src="../img/Artboard – 4.png" alt="">
-              <h3>紅蘿蔔</h3>
-            </div>
-            <div class="card__item">
-              <img src="../img/Artboard – 5.png" alt="">
-              <h3>小黃瓜</h3>
-            </div>
-            <div class="card__item">
-              <img src="../img/Artboard – 6.png" alt="">
-              <h3>葡萄</h3>
-            </div>
+<body>
+  <header>
+    <nav>
+      <div class="logo">
+        <a href="./member.html">
+          <img src="../img/logo.jpg" alt="Back To Home">
+        </a>
+      </div>
+      <ul class="menu">
+        <a href="#">
+          <li class="menu__item">登出</li>
+        </a>
+      </ul>
+    </nav>
+  </header>
+  <div class="container" style="background-image: url('../img/geometry2.png');background-repeat: auto;">
+    <div class="container__item" style="margin: 0 15vw;">
+      <h2>蔬果訂購</h2>
+      <div id="foodselect">
+        <div class="card">
+          <div class="card__item">
+            <img src="../img/Artboard – 1.png" alt="">
+            <h3>番茄</h3>
           </div>
-        </div>
-        <div id="positionselect">
-          <table cellpadding="10px">
-            <col width="20%">
-            <col width="40%">
-            <col width="15%">
-            <col width="15%">
-            <col width="5%">
-            <thead>
-              <tr>
-                <th>小農名稱</th>
-                <th>位置</th>
-                <th>總數量(kg)</th>
-                <th>單價<br />(元/kg)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>A</td>
-                <td>我是位置A</td>
-                <td>150</td>
-                <td>100</td>
-                <td><button class="btn--icon"><i class="fas fa-plus"></i></button></td>
-              </tr>
-              <tr>
-                <td>B</td>
-                <td>我是位置B</td>
-                <td>200</td>
-                <td>110</td>
-                <td><button class="btn--icon"><i class="fas fa-plus"></i></button></td>
-              </tr>
-              <tr>
-                <td>C</td>
-                <td>我是位置C</td>
-                <td>100</td>
-                <td>90</td>
-                <td><button class="btn--icon"><i class="fas fa-plus"></i></button></td>
-              </tr>
-            </tbody>
-          </table>
-          <div style="text-align: center;">
-            <span><button class="btn">選擇其他蔬果</button></span>
-            <span><button class="btn">我要結帳</button></span>
+          <div class="card__item">
+            <img src="../img/Artboard – 2.png" alt="">
+            <h3>玉米</h3>
           </div>
-        </div>
-        <div id="ordercomfirm">
-          <table cellpadding="10px">
-            <col width="30%">
-            <col width="30%">
-            <col width="20%">
-            <col width="20%">
-            <thead>
-              <tr>
-                <th>蔬果名稱</th>
-                <th>小農名稱</th>
-                <th>數量(kg)</th>
-                <th>金額(元)</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-          <br>
-          <h3>總金額：&nbsp;<span id="totalCost"></span>&nbsp;元</h3>
-          <div style="text-align: center;">
-            <span><button class="btn">取消訂購</button></span>
-            <span><button class="btn">確認訂購</button></span>
+          <div class="card__item">
+            <img src="../img/Artboard – 3.png" alt="">
+            <h3>南瓜</h3>
+          </div>
+          <div class="card__item">
+            <img src="../img/Artboard – 4.png" alt="">
+            <h3>紅蘿蔔</h3>
+          </div>
+          <div class="card__item">
+            <img src="../img/Artboard – 5.png" alt="">
+            <h3>小黃瓜</h3>
+          </div>
+          <div class="card__item">
+            <img src="../img/Artboard – 6.png" alt="">
+            <h3>葡萄</h3>
           </div>
         </div>
       </div>
-      <div class="shoppingcart">
-        <div class="shoppingcart__button">
-          <i class="fas fa-shopping-cart fa-2x" style="color: rgb(95, 95, 95)"></i>
-        </div>
-        <div class="shoppingcart__list" style="display: none;">
+      <div id="positionselect">
+        <table cellpadding="10px">
+          <col width="20%">
+          <col width="40%">
+          <col width="15%">
+          <col width="15%">
+          <col width="5%">
+          <thead>
+            <tr>
+              <th>小農名稱</th>
+              <th>位置</th>
+              <th>總數量(kg)</th>
+              <th>單價<br />(元/kg)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>A</td>
+              <td>我是位置A</td>
+              <td>150</td>
+              <td>100</td>
+              <td><button class="btn--icon"><i class="fas fa-plus"></i></button></td>
+            </tr>
+            <tr>
+              <td>B</td>
+              <td>我是位置B</td>
+              <td>200</td>
+              <td>110</td>
+              <td><button class="btn--icon"><i class="fas fa-plus"></i></button></td>
+            </tr>
+            <tr>
+              <td>C</td>
+              <td>我是位置C</td>
+              <td>100</td>
+              <td>90</td>
+              <td><button class="btn--icon"><i class="fas fa-plus"></i></button></td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="text-align: center;">
+          <span><button class="btn">選擇其他蔬果</button></span>
+          <span><button class="btn">我要結帳</button></span>
         </div>
       </div>
-      <div class="addItems" style="display: none;">
-        <h3>名稱：<span></span></h3>
-        <h3>數量：<select></select>&nbsp;kg</h3>
-        <div style="display: flex">
-          <button>取消</button>
-          <button>加入購物車</button>
+      <div id="ordercomfirm">
+        <table cellpadding="10px">
+          <col width="30%">
+          <col width="30%">
+          <col width="20%">
+          <col width="20%">
+          <thead>
+            <tr>
+              <th>蔬果名稱</th>
+              <th>小農名稱</th>
+              <th>數量(kg)</th>
+              <th>金額(元)</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <br>
+        <h3>總金額：&nbsp;<span id="totalCost"></span>&nbsp;元</h3>
+        <div style="text-align: center;">
+          <span><button class="btn">取消訂購</button></span>
+          <span><button class="btn">確認訂購</button></span>
         </div>
       </div>
     </div>
-    <script src="../js/market.js"></script>
-  </body>
+    <div class="shoppingcart">
+      <div class="shoppingcart__button">
+        <i class="fas fa-shopping-cart fa-2x" style="color: rgb(95, 95, 95)"></i>
+      </div>
+      <div class="shoppingcart__list" style="display: none;">
+      </div>
+    </div>
+    <div class="addItems" style="display: none;">
+      <h3>名稱：<span></span></h3>
+      <h3>數量：<select></select>&nbsp;kg</h3>
+      <div style="display: flex">
+        <button>取消</button>
+        <button>加入購物車</button>
+      </div>
+    </div>
+  </div>
+  <script src="../js/market.js"></script>
+</body>
 
-  </html>
+</html>

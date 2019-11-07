@@ -112,41 +112,75 @@ header {
   .card__item h3 {
     margin-top: 5px; }
 
-.list {
-  z-index: 3;
-  width: 25%;
-  height: calc(100vh - 60px);
-  background-color: white;
-  box-shadow: 2px 0px 3px rgba(51, 51, 102, 0.5);
-  overflow-y: auto; }
+.sidebar {
+  position: relative;
+  width: 25vw; }
 
-.dropdown, .order__item .dropdown {
+.dropdown, .order__item .dropdown, #orders .list__item .dropdown {
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
   align-items: center;
   padding: 15px;
-  background-color: silver; }
-  .dropdown h3, .order__item .dropdown h3,
+  background-color: #e6e6e6; }
+  .dropdown h3, .order__item .dropdown h3, #orders .list__item .dropdown h3,
   .dropdown h4,
-  .order__item .dropdown h4 {
+  .order__item .dropdown h4,
+  #orders .list__item .dropdown h4 {
     text-indent: 1em; }
-  .dropdown:hover {
+  .dropdown:hover, #orders .list__item .dropdown:hover {
     background-color: lightgray;
     cursor: pointer; }
 
-.order__item .dropdown {
-  padding: 10px 25px;
-  background-color: white; }
-  .order__item .dropdown:hover {
-    background-color: rgba(206, 206, 206, 0.397); }
+.order__item {
+  background-color: rgba(206, 206, 206, 0.603); }
+  .order__item .dropdown, .order__item #orders .list__item .dropdown, #orders .list__item .order__item .dropdown {
+    padding: 10px 25px;
+    background-color: white; }
+    .order__item .dropdown:hover, .order__item #orders .list__item .dropdown:hover, #orders .list__item .order__item .dropdown:hover {
+      background-color: rgba(206, 206, 206, 0.603); }
 
-.order__item > div:nth-child(2) {
+.order__content, #orders .list__item div:nth-child(2) {
   padding: 10px;
   margin-left: 25px;
-  border-bottom: 3px solid silver; }
-  .order__item > div:nth-child(2):first-child, .order__item > div:nth-child(2):last-child {
-    border-bottom: none; }
+  line-height: 1.25em; }
+
+#routes, #orders {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: stretch; }
+  #routes .list, #orders .list {
+    width: 260px;
+    height: calc(100vh - 60px);
+    background-color: white;
+    box-shadow: 2px 0px 3px rgba(51, 51, 102, 0.5);
+    overflow-y: auto; }
+  #routes .tag, #orders .tag {
+    position: absolute;
+    top: 10px;
+    left: 260px;
+    width: 50px;
+    height: 100px;
+    border-radius: 0 5px 5px 0;
+    box-shadow: 2px 2px 3px rgba(51, 51, 102, 0.5);
+    background-color: white;
+    font-size: 1.05em;
+    text-align: center;
+    line-height: 50px;
+    writing-mode: vertical-lr; }
+    #routes .tag:hover, #orders .tag:hover {
+      cursor: pointer; }
+
+#orders .tag {
+  top: 110px;
+  background-color: rgba(211, 211, 211, 0.75); }
+
+#orders .list__item .dropdown {
+  padding: 10px 25px; }
+
+#orders .list__item div:nth-child(2) {
+  background-color: white; }
 
 .shoppingcart {
   display: flex;
