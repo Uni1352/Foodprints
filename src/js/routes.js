@@ -1,3 +1,6 @@
+const orderIDNumber = [];
+const orderSeqNumber = [];
+
 function hideOrderItems() {
   $('.order').hide();
   $('.order__content').hide();
@@ -41,7 +44,29 @@ function dropdownItems() {
   });
 }
 
-function appendOrders(orders) {
+function appendOrderContent(orders, seqNum, idNum) {
+  let seqNumPos = 0;
+  let routeIDNumber = 0;
+  let orderContentSeq = 0;
+
+  $.each(orders, (index, element) => {
+    for (let i = 0; i < idNum.length; i += 1) {
+      seqNumPos = idNum[i].indexOf(element.id);
+      if (seqNumPos !== -1) {
+        routeIDNumber = i + 1;
+        orderContentSeq = seqNum[i][seqNumPos];
+        break;
+      }
+    }
+
+    $(`#route${routeIDNumber} .order .order__item`).eq(orderContentSeq)
+      .children('.order__content').children(`.user${element.id}`)
+      .text(element.name);
+    $(`#route${routeIDNumber} .order .order__item`).eq(orderContentSeq)
+      .children('.order__content').children(`.phone${element.id}`)
+      .text(element.cellphone);
+  });
+
   $.each(orders, (index, element) => {
     const date = new Date(element.arrivalTime);
     $('#orders>.list').append(`<div class="list__item">
@@ -56,21 +81,31 @@ function appendOrders(orders) {
               ADDR : ${element.address} <br>
             </div>
           </div>`);
-    $('.list__item').eq(index).attr('id', `order${element.id}`);
+    $('#orders .list__item').eq(index).attr('id', `order${element.id}`);
   });
 }
 
 function appendOrderItems(orders, routeID) {
+  const seqArr = [];
+  const idArr = [];
+
   $.each(orders, (index, element) => {
     const seq = element.orderSequence;
     const date = new Date(element.arrivalTime);
     $(`#route${routeID} .order .order__item`).eq((seq - 1)).append(`<div class="order__content">
-      USER: NONAME <br>
-      ID &nbsp;: ${element.orderID} <br>
-      DATE: ${date.toDateString()} <br>
-      ADDR: ${element.orderAddress} <br>
+      USER : <span class="user${element.orderID}"></span> <br>
+      ID &nbsp;&nbsp;: ${element.orderID} <br>
+      DATE : ${date.toDateString()} <br>
+      PHONE: <span class="phone${element.orderID}"></span> <br>
+      ADDR : ${element.orderAddress} <br>
+      PRICE: NO DATA <br>
+      LIST : <br>
     </div>`);
+    seqArr.push(seq - 1);
+    idArr.push(element.orderID);
   });
+  orderSeqNumber.push(seqArr);
+  orderIDNumber.push(idArr);
 }
 
 function appendListItems(data) {
@@ -100,7 +135,7 @@ function appendListItems(data) {
 function getOrders() {
   $.get('https://recycle.likey.com.tw/api/orders')
     .done((req) => {
-      appendOrders(req);
+      appendOrderContent(req, orderSeqNumber, orderIDNumber);
     })
     .fail(() => {
       alert('Error!');
@@ -128,4 +163,6 @@ function getRoutes() {
 $(document).ready(() => {
   getRoutes();
   $('#orders>.list').hide();
+  console.log(orderIDNumber);
+  console.log(orderSeqNumber);
 });
