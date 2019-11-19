@@ -1,0 +1,25 @@
+@import './helpers/mixin';
+
+.vegetable {
+  @include flexboxInit(column);
+
+  &>:last-child() {
+    @include flexboxInit(row, center);
+    padding: 20px;
+    margin: 10px 0;
+    border: 3px dashed lightgray;
+    border-radius: 5px;
+
+    &>i {
+      color: rgb(85, 85, 85);
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.vegetable__item {
+  @include flexboxInit(row, space-between);
+}

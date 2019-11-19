@@ -29,19 +29,18 @@
     </div>
     <div class="container__item" style="width: 50%;justify-content: center;">
       <form>
-        <span style="margin-bottom: 10px">
-          <span><input type="radio" name="usertype" id="farmer" value="Farmer" checked>Farmer</span>
-          <span><input type="radio" name="usertype" id="restaurant" value="restaurant">Restaurant</span>
-        </span>
         <input type="text" name="userName" id="username" placeholder="Your Name">
-        <input type="email" name="userEmail" id="useremail" placeholder="Your E-mail">
+        <!-- <input type="email" name="userEmail" id="useremail" placeholder="Your E-mail"> -->
         <input type="password" name="userPassword" id="userpassword" placeholder="Your Password">
-        <span>Have an Account?&nbsp;<a href="./src/pages/login.html">Login</a></span>
-        <input type="button" value="註冊" id="register">
+        <div style="display: flex;justify-content: space-between;">
+          <span>No Account?&nbsp;<a href="./src/pages/register.html">Register</a></span>
+          <span><a href="./forget.html">Forgot?</a></span>
+        </div>
+        <input type="button" value="登入" id="login">
       </form>
     </div>
   </div>
-  <script src="./src/js/signup.js"></script>
+  <script src="./src/js/login.js"></script>
 </body>
 
 </html>

@@ -7,6 +7,8 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>蔬果足跡-註冊</title>
   <link rel="stylesheet" href="../../dist/css/style.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 
@@ -21,22 +23,43 @@
     </nav>
   </header>
   <div class="container" style="background-image: url('../img/geometry2.png');background-repeat: auto;">
-    <div class="container__item" style="width: 40%;margin: 0 auto;">
+    <div class="container__item" style="width: 70%;margin: 0 auto;">
       <h2 style="text-align: center;">Register</h2>
       <form>
         <span style="margin-bottom: 10px">
-          <span><input type="radio" name="usertype" id="farmer" value="Farmer" checked>Farmer</span>
-          <span><input type="radio" name="usertype" id="restaurant" value="restaurant">Restaurant</span>
+          <span><input type="radio" name="usertype" id="restaurant" value="restaurant" checked>Restaurant</span>
+          <span><input type="radio" name="usertype" id="farmer" value="farmer">Farmer</span>
         </span>
-        <input type="text" name="userName" id="username" placeholder="Your Name">
-        <input type="email" name="userEmail" id="useremail" placeholder="Your E-mail">
+        <input type="text" name="name" id="name" placeholder="Your Name">
+        <input type="text" name="userName" id="username" placeholder="Your Accout Name">
         <input type="password" name="userPassword" id="userpassword" placeholder="Your Password">
-        <span>Have an Account?&nbsp;<a href="./login.html">Login</a></span>
+        <input type="email" name="userEmail" id="useremail" placeholder="Your E-mail">
+        <input type="text" name="userAddress" id="useraddress" placeholder="Your Address">
+        <input type="text" name="userPhone" id="userphone" placeholder="Your Phone">
+        <div class="vegetable">
+          <div class="vegetable__item">
+            <input type="text" name="vegeName" placeholder="蔬果名稱">
+            <span>
+              <input type="number" name="vegeQuantity" min="0" placeholder="數量">
+              公斤
+            </span>
+            <span>
+              <input type="number" name="vegePrice" min="0" placeholder="單價">
+              元/公斤
+            </span>
+            <span style="align-self: center;">
+              <div class="btn--icon delete"><i class="fas fa-times"></i></div>
+            </span>
+          </div>
+          <div>
+            <i class="fas fa-plus"> &nbsp;新增蔬果</i>
+          </div>
+        </div>
         <input type="button" value="註冊" id="register">
       </form>
     </div>
   </div>
-  <script src="../js/signup.js"></script>
+  <script src="../js/register.js"></script>
 </body>
 
 </html>

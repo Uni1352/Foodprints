@@ -7,6 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>蔬果足跡</title>
   <link rel="stylesheet" href="../../dist/css/style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -24,21 +25,22 @@
       <a href="./settings.html"><button class="btn">基本資料設定</button></a>
       <a href="./account.html"><button class="btn">密碼修改</button></a>
       <!-- 餐廳 -->
-      <div>
+      <div id="restaurant">
         <a href="./market.html"><button class="btn">蔬果訂購</button></a><br>
         <a href="./history.html"><button class="btn">訂購紀錄</button></a>
       </div>
       <!-- 小農 -->
-      <div>
+      <div id="farmer">
         <a href="./vehicle.html"><button class="btn">運送路線圖</button></a><br>
       </div>
       <!-- 管理員 -->
-      <div>
+      <div id="administrator">
         <a href="./routes.html"><button class="btn">總路線圖</button></a>
       </div>
-      <a href="#"><button class="btn">登出</button></a>
+      <button class="btn" id="logout">登出</button>
     </div>
   </div>
+  <script src="../js/member.js"></script>
 </body>
 
 </html>

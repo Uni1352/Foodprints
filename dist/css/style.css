@@ -284,3 +284,28 @@ td {
   align-items: stretch;
   width: 100%;
   padding: 10vh 5vw; }
+
+.vegetable {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: flex-start;
+  align-items: stretch; }
+  .vegetable > :last-child {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: stretch;
+    padding: 20px;
+    margin: 10px 0;
+    border: 3px dashed lightgray;
+    border-radius: 5px; }
+    .vegetable > :last-child > i {
+      color: #555555; }
+    .vegetable > :last-child:hover {
+      cursor: pointer; }
+
+.vegetable__item {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: stretch; }

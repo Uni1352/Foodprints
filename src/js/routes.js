@@ -65,6 +65,9 @@ function appendOrderContent(orders, seqNum, idNum) {
     $(`#route${routeIDNumber} .order .order__item`).eq(orderContentSeq)
       .children('.order__content').children(`.phone${element.id}`)
       .text(element.cellphone);
+    $(`#route${routeIDNumber} .order .order__item`).eq(orderContentSeq)
+      .children('.order__content').children(`.price${element.id}`)
+      .text(element.profit);
   });
 
   $.each(orders, (index, element) => {
@@ -98,7 +101,7 @@ function appendOrderItems(orders, routeID) {
       DATE : ${date.toDateString()} <br>
       PHONE: <span class="phone${element.orderID}"></span> <br>
       ADDR : ${element.orderAddress} <br>
-      PRICE: NO DATA <br>
+      PRICE: <span class="price${element.orderID}"></span> <br>
       LIST : <br>
     </div>`);
     seqArr.push(seq - 1);
@@ -133,7 +136,7 @@ function appendListItems(data) {
 }
 
 function getOrders() {
-  $.get('https://recycle.likey.com.tw/api/orders')
+  $.get('https://recycle.likey.com.tw/api/orders?history=0')
     .done((req) => {
       appendOrderContent(req, orderSeqNumber, orderIDNumber);
     })
@@ -163,6 +166,4 @@ function getRoutes() {
 $(document).ready(() => {
   getRoutes();
   $('#orders>.list').hide();
-  console.log(orderIDNumber);
-  console.log(orderSeqNumber);
 });
