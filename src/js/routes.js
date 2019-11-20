@@ -271,24 +271,22 @@ function processFormData(data) {
   $.each(data, (index, element) => {
     // window.Origin =`${element.origin.farmLatitude}, ${element.origin.farmLongitude}`
     window.Origin = '25.0786063,121.526246';
-    if (index === 0) {
-      $.each(element.orders, (i, item) => {
-        window.Destination = `${item.latitude},${item.longitude}`;
-        calculateRouteFromAtoB(platform);
+    $.each(element.orders, (i, item) => {
+      window.Destination = `${item.latitude},${item.longitude}`;
+      calculateRouteFromAtoB(platform);
 
-        const orderpointMarker = new H.map.Marker({
-          lat: `${item.latitude}`,
-          lng: `${item.longitude}`
-        }, {
-          icon: orderIcon
-        });
-        map.setCenter(orderpointMarker.getPosition());
-        map.setZoom(14);
-        map.addObject(orderpointMarker);
-
-        window.Origin = window.Destination;
+      const orderpointMarker = new H.map.Marker({
+        lat: `${item.latitude}`,
+        lng: `${item.longitude}`
+      }, {
+        icon: orderIcon
       });
-    }
+      map.setCenter(orderpointMarker.getPosition());
+      map.setZoom(14);
+      map.addObject(orderpointMarker);
+
+      window.Origin = window.Destination;
+    });
   });
 }
 
