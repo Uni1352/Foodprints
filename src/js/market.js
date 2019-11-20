@@ -1,3 +1,6 @@
+// TODO: 取得小農資料，動態新增 table 內的資料
+// TODO: 一個訂單一個品項
+
 class orderItem {
   constructor() {
     this.foodName = '';

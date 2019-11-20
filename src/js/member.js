@@ -16,11 +16,13 @@ function getCookie(cname) {
 }
 
 $(document).ready(() => {
-  if (getCookie('user') === '') {
-    alert('Please Login.');
-    window.location = 'https://recycle.likey.com.tw/foodprints';
+  const usertype = getCookie('userType');
+
+  if (usertype === 'farmer') {
+    $('#restaurant').hide();
+  } else {
+    $('#farmer').hide();
   }
-  console.log(getCookie('user'));
 });
 
 $('#logout').click(() => {
@@ -31,7 +33,7 @@ $('#logout').click(() => {
     proccessData: false,
     success(res) {
       alert(res.message);
-      setCookie('user', '', -1);
+      setCookie('userType', '', -1);
       window.location = 'https://recycle.likey.com.tw/foodprints';
     },
     error() {

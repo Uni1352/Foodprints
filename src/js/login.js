@@ -7,7 +7,9 @@ function setCookie(cname, cvalue, exdays) {
 
 $('#login').click(() => {
   const user = {
+    // TODO: 刪除 platform
     platform: 'web',
+    identity: $('input[name=usertype]:checked').val(),
     username: $('#username').val(),
     password: $('#userpassword').val()
   };
@@ -20,7 +22,7 @@ $('#login').click(() => {
     data: JSON.stringify(user),
     success(res) {
       alert(res.message);
-      setCookie('user', user.username, 1);
+      setCookie('userType', user.identity, 1);
       window.location = 'https://recycle.likey.com.tw/foodprints/src/pages/member.html';
     },
     error() {

@@ -24,11 +24,13 @@
   <div class="container" style="background-image: url('../img/geometry2.png');background-repeat: auto;">
     <div class="container__item" style="width: 50%;background-color: rgba(192, 192, 192, 0.5);justify-content: center;">
       <h2>蔬果足跡</h2>
-      <!-- FIXME: 修個內容？ -->
-      <p>為低碳蔬果創造一個產銷的友善環境，讓有低碳理念的餐廳能夠方便地買到理念相同的蔬果。</p>
     </div>
     <div class="container__item" style="width: 50%;justify-content: center;">
       <form>
+        <span style="margin-bottom: 10px">
+          <span><input type="radio" name="usertype" value="restaurant" checked>Restaurant</span>
+          <span><input type="radio" name="usertype" value="farmer">Farmer</span>
+        </span>
         <input type="text" name="userName" id="username" placeholder="Your Name">
         <!-- <input type="email" name="userEmail" id="useremail" placeholder="Your E-mail"> -->
         <input type="password" name="userPassword" id="userpassword" placeholder="Your Password">

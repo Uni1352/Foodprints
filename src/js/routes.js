@@ -7,43 +7,6 @@ function hideOrderItems() {
   $('#orders .list__item').children('div:nth-child(2)').hide();
 }
 
-function clickTags() {
-  $('.sidebar').on('click', '.tag', function () {
-    $(this).parent().siblings().children('.list')
-      .hide();
-    $(this).parent().siblings().children('.tag')
-      .css('background-color', 'rgba(211, 211, 211, 0.75)');
-    $(this).siblings('.list').show();
-    $(this).css('background-color', 'white');
-  });
-}
-
-function dropdownItems() {
-  $('.list__item>.dropdown').click(function () {
-    $(this).siblings('div').slideToggle();
-
-    if ($(this).hasClass('dropdown--clicked')) {
-      $(this).children('i').css('transform', 'rotate(0deg)');
-      $(this).removeClass('dropdown--clicked');
-    } else {
-      $(this).children('i').css('transform', 'rotate(90deg)');
-      $(this).addClass('dropdown--clicked');
-    }
-  });
-
-  $('.order__item>.dropdown').click(function () {
-    $(this).siblings('.order__content').slideToggle();
-
-    if ($(this).hasClass('dropdown--clicked')) {
-      $(this).children('i').css('transform', 'rotate(0deg)');
-      $(this).removeClass('dropdown--clicked');
-    } else {
-      $(this).children('i').css('transform', 'rotate(90deg)');
-      $(this).addClass('dropdown--clicked');
-    }
-  });
-}
-
 function appendOrderContent(orders, seqNum, idNum) {
   let seqNumPos = 0;
   let routeIDNumber = 0;
@@ -129,6 +92,7 @@ function appendListItems(data) {
                   <h4>order ${j + 1}</h4>
                 </div>
               </div>`);
+      console.log(element.orders[j].latitude);
     }
 
     appendOrderItems(element.orders, element.routeID);
@@ -145,8 +109,6 @@ function getOrders() {
     })
     .always(() => {
       hideOrderItems();
-      dropdownItems();
-      clickTags();
     });
 }
 
@@ -165,5 +127,48 @@ function getRoutes() {
 
 $(document).ready(() => {
   getRoutes();
-  $('#orders>.list').hide();
+  $('.list').hide();
+  $('.tag').css('left', '0');
+});
+
+// 標籤切換 & 收放
+$('.sidebar').on('click', '.tag', () => {
+  if ($(this).hasClass('tag--open')) {
+    if ($(this).siblings('.list').is(':hidden')) {
+      $(this).parent().siblings().children('.list')
+        .hide();
+      $(this).parent().siblings().children('.tag')
+        .css('background-color', 'rgb(211, 211, 211)');
+      $(this).siblings('.list').show();
+      $(this).css('background-color', 'white');
+    } else {
+      $('.tag').removeClass('tag--open');
+      $(this).siblings('.list').hide();
+      $('.tag').css('left', '0');
+    }
+  } else {
+    $('.tag').addClass('tag--open');
+    $(this).siblings('.list').show();
+    $('.tag').css('left', '250px');
+  }
+});
+
+// Dropdown
+$('.list').on('click', '.dropdown', function () {
+  const re = /^route/;
+
+  $(this).siblings('div').slideToggle();
+
+  if ($(this).hasClass('dropdown--clicked')) {
+    $(this).children('i').css('transform', 'rotate(0deg)');
+    $(this).removeClass('dropdown--clicked');
+  } else {
+    $(this).children('i').css('transform', 'rotate(90deg)');
+    $(this).addClass('dropdown--clicked');
+  }
+
+  if (re.exec($(this).parent().attr('id'))) {
+    const index = $(this).parent().index();
+    console.log(index);
+  }
 });

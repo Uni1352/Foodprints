@@ -5,8 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>蔬果足跡-訂購紀錄</title>
+  <title>蔬果足跡-商品總覽</title>
   <link rel="stylesheet" href="../../dist/css/style.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 
@@ -18,34 +20,18 @@
           <img src="../img/logo.jpg" alt="Back To Home">
         </a>
       </div>
-      <!-- <ul class="menu">
-        <a href="#">
-          <li class="menu__item">登出</li>
-        </a>
-      </ul> -->
     </nav>
   </header>
   <div class="container" style="background-image: url('../img/geometry2.png');background-repeat: auto;">
     <div class="container__item" style="margin: 0 15vw;">
-      <h2>訂購紀錄</h2>
-      <!-- TODO: 搜尋引擎 -->
-      <!-- <form action="#" style="flex-direction: row;">
-        <input type="text" name="search" style="width: 80%;">
-        <input type="submit" value="搜尋" style="width: 15%;">
-      </form> -->
-      <table cellpadding="10px">
-        <col width="20%">
-        <col width="20%">
-        <col width="30%">
-        <col width="15%">
-        <col width="15%">
+      <h2>商品總覽</h2>
+      <table cellpadding="10px" style="width: 70%;margin: 0 auto">
+        <col width="50%">
+        <col width="50%">
         <thead>
           <tr>
-            <th>日期</th>
             <th>蔬果名稱</th>
-            <th>小農名稱</th>
-            <th>數量(kg)</th>
-            <th>金額(元)</th>
+            <th>目前數量(kg)</th>
           </tr>
         </thead>
         <tbody></tbody>
@@ -53,7 +39,7 @@
       </table>
     </div>
   </div>
-  <script src="../js/orders.js"></script>
+  <script src="../js/products.js"></script>
 </body>
 
 </html>
