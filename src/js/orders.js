@@ -29,8 +29,8 @@ function getOrders() {
 
   if (usertype === 'restaurant') {
     $.get('https://graduation.jj97181818.me/api/orders?history=1')
-      .done((req) => {
-        appendHistoryOrderItems(req, idNumber);
+      .done((res) => {
+        appendHistoryOrderItems(res, idNumber);
       })
       .fail(() => {
         alert('Error!');

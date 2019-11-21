@@ -26,6 +26,9 @@ $('#register').click(() => {
       }
     });
   } else if (usertype === 'farmer') {
+    newUser.location.latitude = '';
+    newUser.location.longtitude = '';
+
     $.ajax({
       type: 'post',
       url: 'https://graduation.jj97181818.me/api/farmers',
