@@ -439,6 +439,9 @@ $('.sidebar').on('click', '.tag', function () {
   } else {
     $('.tag').addClass('tag--open');
     $(this).siblings('.list').show();
+    $(this).parent().siblings().children('.tag')
+      .css('background-color', 'rgb(211, 211, 211)');
+    $(this).css('background-color', 'white');
     $('.tag').css('left', '250px');
   }
 });
