@@ -34,6 +34,7 @@ $('#logout').click(() => {
     success(res) {
       alert(res.message);
       setCookie('userType', '', -1);
+      setCookie('userID', '', -1);
       window.location = 'https://recycle.likey.com.tw/foodprints';
     },
     error() {

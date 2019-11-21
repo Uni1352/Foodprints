@@ -1,5 +1,6 @@
 const orderIDNumber = [];
 const orderSeqNumber = [];
+
 // -----------------------------------------
 
 // 畫出路線圖
@@ -416,7 +417,7 @@ function getRoutes() {
 }
 
 $(document).ready(() => {
-  getRoutes();
+  getRoutes(); // TODO: 定時更新
   $('.list').hide();
   $('.tag').css('left', '0');
 });

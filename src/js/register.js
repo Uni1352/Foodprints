@@ -25,19 +25,19 @@ $('#register').click(() => {
       }
     });
   } else if (usertype === 'farmer') {
-    // $.ajax({
-    //   type: 'post',
-    //   url: 'https://recycle.likey.com.tw/api/drivers',
-    //   contentType: 'application/json',
-    //   proccessData: false,
-    //   data: JSON.stringify(newUser),
-    //   success() {
-    //     alert('Success!');
-    //     window.location = 'https://recycle.likey.com.tw/foodprints/index.html';
-    //   },
-    //   error() {
-    //     alert('Failed!');
-    //   }
-    // });
+    $.ajax({
+      type: 'post',
+      url: 'https://recycle.likey.com.tw/api/farmers',
+      contentType: 'application/json',
+      proccessData: false,
+      data: JSON.stringify(newUser),
+      success() {
+        alert('Success!');
+        window.location = 'https://recycle.likey.com.tw/foodprints/index.html';
+      },
+      error() {
+        alert('Failed!');
+      }
+    });
   }
 });

@@ -23,13 +23,16 @@ function getCookie(cname) {
 const farmerID = getCookie('userID');
 
 // 修改架上蔬果資料
-function putVegesOnShelf(veges) {
+function putVegesOnShelf(veges, index) {
   $.ajax({
     type: 'put',
-    url: `https://recycle.likey.com.tw/api/items/${farmerID}`,
+    url: `https://recycle.likey.com.tw/api/items/${index}`,
     contentType: 'application/json',
     proccessData: false,
-    data: JSON.stringify(veges)
+    data: JSON.stringify(veges),
+    error() {
+      alert('Failed to modify items.');
+    }
   });
 }
 
@@ -37,10 +40,13 @@ function putVegesOnShelf(veges) {
 function postVegesOnShelf(veges) {
   $.ajax({
     type: 'post',
-    url: `https://recycle.likey.com.tw/api/items/${farmerID}`,
+    url: 'https://recycle.likey.com.tw/api/items',
     contentType: 'application/json',
     proccessData: false,
-    data: JSON.stringify(veges)
+    data: JSON.stringify(veges),
+    error() {
+      alert('Failed to post items.');
+    }
   });
 }
 
@@ -127,6 +133,7 @@ $('.vegetable').on('click', '.delete', function () {
   const index = $(this).parent().index();
 
   if (index < numOfVegesOnShelf) {
+    // TODO: 刪除已上架的蔬果資料
     numOfVegesOnShelf -= 1;
   }
   $(this).parent().parent().remove();
@@ -139,9 +146,12 @@ $('#shelf').click(() => {
   addNewVeges(newVeges, itemLength);
   for (let i = 0; i < itemLength; i += 1) {
     if (i < numOfVegesOnShelf) {
-      putVegesOnShelf(oldVeges);
+      newVeges[i].id = i + 1;
+      putVegesOnShelf(oldVeges[i], i);
     } else {
-      postVegesOnShelf(newVeges);
+      newVeges[i].id = i + 1;
+      newVeges[i].FarmerID = farmerID;
+      postVegesOnShelf(newVeges[i]);
     }
   }
 

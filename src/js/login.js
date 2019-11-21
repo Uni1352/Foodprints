@@ -21,7 +21,7 @@ $('#login').click(() => {
     proccessData: false,
     data: JSON.stringify(user),
     success(res) {
-      alert(res.message);
+      setCookie('userID', res.userID, 1);
       setCookie('userType', user.identity, 1);
       window.location = 'https://recycle.likey.com.tw/foodprints/src/pages/member.html';
     },

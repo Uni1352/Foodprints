@@ -16,10 +16,84 @@ const item = {
   price: 0,
   total: 0
 };
+let userdata = {};
+let farmers = {};
 let orders = [];
 let orderIndex = 0;
 
+function getCookie(cname) {
+  const name = `${cname}=`;
+  const ca = document.cookie.split(';');
+  for (let i = 0; i < ca.length; i += 1) {
+    const c = ca[i].trim();
+    if (c.indexOf(name) === 0) return c.substring(name.length, c.length);
+  }
+  return '';
+}
+
+function getUserData(idnum) {
+  $.get(`https://recycle.likey.com.tw/api/users/${idnum}`)
+    .done((res) => res)
+    .fail(() => {
+      alert('Failed to get user data.');
+    });
+}
+
+function getFarmersData() {
+  $.get('https://recycle.likey.com.tw/api/farmers')
+    .done((res) => res);
+}
+
+function appendTableDataAboutVegetable(vege) {
+  $.each(farmers, (index, element) => {
+    if (element.vegetables.foodName === vege) {
+      $('#positionselect>table').children('tbody').append(`<tr>
+        <td>${element.name}</td>
+        <td>${element.address}</td>
+        <td>${element.vegetables.vegeQuantity}</td>
+        <td>${element.vegetables.vegePrice}</td>
+        <td><button class="btn--icon"><i class="fas fa-plus"></i></button></td>
+      </tr>`);
+    }
+  });
+}
+
+// 上傳訂購物件
+function postOrders(order) {
+  $.each(order, (index, element) => {
+    const data = {
+      userID: parseInt(getCookie('userID'), 10),
+      status: 0,
+      profit: element.cost,
+      orderDate: element.date,
+      address: userdata.address,
+      items: {
+        foodName: element.foodName,
+        farmer: element.farmerName,
+        foodQuantity: element.foodQuantity,
+        foodPrice: element.foodPrice
+      }
+    };
+
+    $.ajax({
+      type: 'post',
+      url: 'https://recycle.likey.com.tw/api/orders',
+      contentType: 'application/json',
+      proccessData: false,
+      data: JSON.stringify(data),
+      error() {
+        alert('Failed to post orders.');
+      }
+    });
+  });
+}
+
 $(document).ready(() => {
+  const userID = getCookie('userID');
+
+  userdata = getUserData(userID);
+  farmers = getFarmersData();
+
   $('#positionselect').hide();
   $('#ordercomfirm').hide();
 });
@@ -27,6 +101,7 @@ $(document).ready(() => {
 // 選擇要購買的蔬果
 $('.card__item').click(function () {
   item.name = $(this).children('h3').text();
+  appendTableDataAboutVegetable(item.name);
 
   $('#foodselect').hide();
   $('#positionselect').fadeIn(500);
@@ -156,9 +231,8 @@ $('#ordercomfirm').on('click', '.btn', function () {
   const index = $('.btn').index($(this));
 
   if (index === 4) {
+    postOrders(orders);
     alert('訂購成功!!!');
-
-    console.log(orders);
   }
 
   // 歸零

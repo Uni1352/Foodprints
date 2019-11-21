@@ -21,14 +21,14 @@ function appendTableData(items) {
 function getVegeItems() {
   const farmerID = getCookie('userID');
 
-  // $.get(`https://recycle.likey.com.tw/api/farmers/${farmerID}`)
-  //   .done((req) => {
-  //     appendTableData(req.vegetables);
-  //   })
-  //   .fail(() => {
-  //     alert('Error!');
-  //   })
-  //   .always(() => {});
+  $.get(`https://recycle.likey.com.tw/api/farmers/${farmerID}`)
+    .done((req) => {
+      appendTableData(req.vegetables);
+    })
+    .fail(() => {
+      alert('Error!');
+    })
+    .always(() => {});
 }
 
 $(document).ready(() => {
