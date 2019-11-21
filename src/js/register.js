@@ -12,31 +12,33 @@ $('#register').click(() => {
   if (usertype === 'restaurant') {
     $.ajax({
       type: 'post',
-      url: 'https://recycle.likey.com.tw/api/users',
+      url: 'https://graduation.jj97181818.me/api/users',
       contentType: 'application/json',
       proccessData: false,
       data: JSON.stringify(newUser),
       success() {
-        alert('Success!');
-        window.location = 'https://recycle.likey.com.tw/foodprints/index.html';
+        alert('Create account successfully!');
+        window.location = 'https://graduation.jj97181818.me';
       },
       error() {
-        alert('Failed!');
+        alert('Failed to create account.');
+        window.location.reload();
       }
     });
   } else if (usertype === 'farmer') {
     $.ajax({
       type: 'post',
-      url: 'https://recycle.likey.com.tw/api/farmers',
+      url: 'https://graduation.jj97181818.me/api/farmers',
       contentType: 'application/json',
       proccessData: false,
       data: JSON.stringify(newUser),
       success() {
-        alert('Success!');
-        window.location = 'https://recycle.likey.com.tw/foodprints/index.html';
+        alert('Create account successfully!');
+        window.location = 'https://graduation.jj97181818.me';
       },
       error() {
-        alert('Failed!');
+        alert('Failed to create account.');
+        window.location.reload();
       }
     });
   }

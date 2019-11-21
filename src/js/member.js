@@ -2,7 +2,7 @@ function setCookie(cname, cvalue, exdays) {
   const d = new Date();
   d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
   const expires = `expires=${d.toGMTString()}`;
-  document.cookie = `${cname}=${cvalue};${expires};domain=recycle.likey.com.tw;path=/`;
+  document.cookie = `${cname}=${cvalue};${expires};domain=graduation.jj97181818.me;path=/`;
 }
 
 function getCookie(cname) {
@@ -20,7 +20,7 @@ $(document).ready(() => {
 
   if (usertype === 'farmer') {
     $('#restaurant').hide();
-  } else {
+  } else if (usertype === 'restaurant') {
     $('#farmer').hide();
   }
 });
@@ -28,17 +28,17 @@ $(document).ready(() => {
 $('#logout').click(() => {
   $.ajax({
     type: 'delete',
-    url: 'https://recycle.likey.com.tw/api/session',
+    url: 'https://graduation.jj97181818.me/api/session',
     contentType: 'application/json',
     proccessData: false,
     success(res) {
       alert(res.message);
-      setCookie('userType', '', -1);
       setCookie('userID', '', -1);
-      window.location = 'https://recycle.likey.com.tw/foodprints';
+      setCookie('userType', '', -1);
+      window.location = 'https://graduation.jj97181818.me';
     },
     error() {
-      alert('Error!');
+      alert('Failed to logout.');
     }
   });
 });

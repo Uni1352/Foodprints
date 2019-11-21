@@ -2,13 +2,12 @@ function setCookie(cname, cvalue, exdays) {
   const d = new Date();
   d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
   const expires = `expires=${d.toGMTString()}`;
-  document.cookie = `${cname}=${cvalue};${expires};domain=recycle.likey.com.tw;path=/`;
+  document.cookie = `${cname}=${cvalue};${expires};domain=graduation.jj97181818.me;path=/`;
 }
 
+// 登入
 $('#login').click(() => {
   const user = {
-    // TODO: 刪除 platform
-    platform: 'web',
     identity: $('input[name=usertype]:checked').val(),
     username: $('#username').val(),
     password: $('#userpassword').val()
@@ -16,19 +15,18 @@ $('#login').click(() => {
 
   $.ajax({
     type: 'post',
-    url: 'https://recycle.likey.com.tw/api/session',
+    url: 'https://graduation.jj97181818.me/api/session',
     contentType: 'application/json',
     proccessData: false,
     data: JSON.stringify(user),
     success(res) {
-      setCookie('userID', res.userID, 1);
+      setCookie('userID', res.ID, 1);
       setCookie('userType', user.identity, 1);
-      window.location = 'https://recycle.likey.com.tw/foodprints/src/pages/member.html';
+      window.location = 'https://graduation.jj97181818.me/src/pages/member.html';
     },
     error() {
-      alert('Login Failed!');
-      $('#username').val('');
-      $('#userpassword').val('');
+      alert('Failed to login. Please try once again.');
+      window.location.reload();
     }
   });
 });

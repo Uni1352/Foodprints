@@ -390,7 +390,7 @@ function appendListItems(data) {
 }
 
 function getOrders() {
-  $.get('https://recycle.likey.com.tw/api/orders?history=0')
+  $.get('https://graduation.jj97181818.me/api/orders?history=0')
     .done((req) => {
       appendOrderContent(req, orderSeqNumber, orderIDNumber);
     })
@@ -403,7 +403,7 @@ function getOrders() {
 }
 
 function getRoutes() {
-  $.get('https://recycle.likey.com.tw/api/routes')
+  $.get('https://graduation.jj97181818.me/api/routes')
     .done((req) => {
       appendListItems(req.routes);
       processFormData(req.routes);

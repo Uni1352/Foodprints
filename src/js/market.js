@@ -32,7 +32,7 @@ function getCookie(cname) {
 }
 
 function getUserData(idnum) {
-  $.get(`https://recycle.likey.com.tw/api/users/${idnum}`)
+  $.get(`https://graduation.jj97181818.me/api/users/${idnum}`)
     .done((res) => res)
     .fail(() => {
       alert('Failed to get user data.');
@@ -40,7 +40,7 @@ function getUserData(idnum) {
 }
 
 function getFarmersData() {
-  $.get('https://recycle.likey.com.tw/api/farmers')
+  $.get('https://graduation.jj97181818.me/api/farmers')
     .done((res) => res);
 }
 
@@ -77,7 +77,7 @@ function postOrders(order) {
 
     $.ajax({
       type: 'post',
-      url: 'https://recycle.likey.com.tw/api/orders',
+      url: 'https://graduation.jj97181818.me/api/orders',
       contentType: 'application/json',
       proccessData: false,
       data: JSON.stringify(data),

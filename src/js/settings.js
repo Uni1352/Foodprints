@@ -13,7 +13,7 @@ function getCookie(cname) {
 function getUserData() {
   userID = getCookie('userID');
 
-  $.get(`https://recycle.likey.com.tw/api/items/${userID}`)
+  $.get(`https://graduation.jj97181818.me/api/items/${userID}`)
     .done((res) => {
       $('input[name=name]').val(res.name);
       $('input[name=userEmail]').val(res.email);
@@ -38,7 +38,7 @@ $('#modify').click(() => {
   if (usertype === 'restaurant') {
     $.ajax({
       type: 'put',
-      url: `https://recycle.likey.com.tw/api/users/${userID}`,
+      url: `https://graduation.jj97181818.me/api/users/${userID}`,
       contentType: 'application/json',
       proccessData: false,
       data: JSON.stringify(modifiedData),
@@ -49,7 +49,7 @@ $('#modify').click(() => {
   } else if (usertype === 'farmer') {
     $.ajax({
       type: 'put',
-      url: `https://recycle.likey.com.tw/api/farmers/${userID}`,
+      url: `https://graduation.jj97181818.me/api/farmers/${userID}`,
       contentType: 'application/json',
       proccessData: false,
       data: JSON.stringify(modifiedData),

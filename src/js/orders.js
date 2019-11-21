@@ -28,7 +28,7 @@ function getOrders() {
   const usertype = getCookie('userType');
 
   if (usertype === 'restaurant') {
-    $.get('https://recycle.likey.com.tw/api/orders?history=1')
+    $.get('https://graduation.jj97181818.me/api/orders?history=1')
       .done((req) => {
         appendHistoryOrderItems(req, idNumber);
       })
@@ -37,7 +37,7 @@ function getOrders() {
       });
   } else if (usertype === 'farmer') {
     // 抓已完成的路線
-    // $.get('https://recycle.likey.com.tw/api/routes')
+    // $.get('https://graduation.jj97181818.me/api/routes')
     //   .done((req) => {
     //     appendOrderItems(req);
     //   })

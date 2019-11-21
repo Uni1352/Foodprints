@@ -21,7 +21,7 @@ function appendTableData(items) {
 function getVegeItems() {
   const farmerID = getCookie('userID');
 
-  $.get(`https://recycle.likey.com.tw/api/farmers/${farmerID}`)
+  $.get(`https://graduation.jj97181818.me/api/farmers/${farmerID}`)
     .done((req) => {
       appendTableData(req.vegetables);
     })

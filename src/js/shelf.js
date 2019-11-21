@@ -26,7 +26,7 @@ const farmerID = getCookie('userID');
 function putVegesOnShelf(veges, index) {
   $.ajax({
     type: 'put',
-    url: `https://recycle.likey.com.tw/api/items/${index}`,
+    url: `https://graduation.jj97181818.me/api/items/${index}`,
     contentType: 'application/json',
     proccessData: false,
     data: JSON.stringify(veges),
@@ -40,7 +40,7 @@ function putVegesOnShelf(veges, index) {
 function postVegesOnShelf(veges) {
   $.ajax({
     type: 'post',
-    url: 'https://recycle.likey.com.tw/api/items',
+    url: 'https://graduation.jj97181818.me/api/items',
     contentType: 'application/json',
     proccessData: false,
     data: JSON.stringify(veges),
@@ -92,7 +92,7 @@ function addNewVeges(veges, length) {
 
 // 取得所有已上架蔬果
 function getAllVeges() {
-  $.get(`https://recycle.likey.com.tw/api/farmers/${farmerID}`)
+  $.get(`https://graduation.jj97181818.me/api/farmers/${farmerID}`)
     .done((req) => {
       $.each(req.vegetables, (index, element) => {
         oldVeges.push(element);
