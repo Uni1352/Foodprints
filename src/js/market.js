@@ -1,11 +1,11 @@
 class OrderItem {
   constructor() {
-    this.foodName = '';
+    this.vegeName = '';
     this.farmerName = '';
-    this.foodQuantity = 0;
-    this.foodPrice = 0;
-    this.cost = 0;
-    this.date = '';
+    this.vegeQuantity = 0;
+    this.vegePrice = 0;
+    this.profit = 0;
+    this.orderDate = '';
   }
 }
 
@@ -16,8 +16,8 @@ const item = {
   price: 0,
   total: 0
 };
+const farmers = {};
 let userdata = {};
-let farmers = {};
 let orders = [];
 let orderIndex = 0;
 
@@ -31,9 +31,11 @@ function getCookie(cname) {
   return '';
 }
 
-function getUserData(idnum) {
-  $.get(`https://graduation.jj97181818.me/api/users/${idnum}`)
-    .done((res) => res)
+function getUserData(id) {
+  $.get(`https://graduation.jj97181818.me/api/users/${id}`)
+    .done((res) => {
+      userdata = res;
+    })
     .fail(() => {
       alert('Failed to get user data.');
     });
@@ -41,37 +43,47 @@ function getUserData(idnum) {
 
 function getFarmersData() {
   $.get('https://graduation.jj97181818.me/api/farmers')
-    .done((res) => res);
+    .done((res) => {
+      $.each(res, (index, element) => {
+        farmers.push(element);
+      });
+    });
 }
 
-function appendTableDataAboutVegetable(vege) {
+function appendTableDataAboutVegetable(vegetableName) {
   $.each(farmers, (index, element) => {
-    if (element.vegetables.foodName === vege) {
+    if (element.vegetables.vegeName === vegetableName) {
       $('#positionselect>table').children('tbody').append(`<tr>
         <td>${element.name}</td>
         <td>${element.address}</td>
         <td>${element.vegetables.vegeQuantity}</td>
         <td>${element.vegetables.vegePrice}</td>
-        <td><button class="btn--icon"><i class="fas fa-plus"></i></button></td>
+        <td><button class="btn--icon add"><i class="fas fa-plus"></i></button></td>
       </tr>`);
     }
   });
 }
 
 // 上傳訂購物件
-function postOrders(order) {
-  $.each(order, (index, element) => {
-    const data = {
+function postOrders(list) {
+  // FIXME: farmerID => farmerName？
+  // FIXME: 地址經緯度
+  $.each(list, (index, element) => {
+    const order = {
       userID: parseInt(getCookie('userID'), 10),
       status: 0,
-      profit: element.cost,
-      orderDate: element.date,
+      profit: element.profit,
+      orderDate: element.orderDate,
       address: userdata.address,
+      location: {
+        latitude: '',
+        longtitude: ''
+      },
       items: {
-        foodName: element.foodName,
-        farmer: element.farmerName,
-        foodQuantity: element.foodQuantity,
-        foodPrice: element.foodPrice
+        foodName: element.vegeName,
+        farmerID: element.farmerName,
+        foodQuantity: element.vegeQuantity,
+        foodPrice: element.vegePrice
       }
     };
 
@@ -80,25 +92,30 @@ function postOrders(order) {
       url: 'https://graduation.jj97181818.me/api/orders',
       contentType: 'application/json',
       proccessData: false,
-      data: JSON.stringify(data),
+      data: JSON.stringify(order),
       error() {
-        alert('Failed to post orders.');
+        alert('Failed to post order.');
       }
     });
   });
 }
 
+// Step 0: initial
 $(document).ready(() => {
   const userID = getCookie('userID');
 
-  userdata = getUserData(userID);
-  farmers = getFarmersData();
+  getUserData(userID);
+  getFarmersData();
+
+  // TODO: test
+  // console.log(userdata);
+  // console.log(farmers);
 
   $('#positionselect').hide();
   $('#ordercomfirm').hide();
 });
 
-// 選擇要購買的蔬果
+// Step 1: 選擇要購買的蔬果
 $('.card__item').click(function () {
   item.name = $(this).children('h3').text();
   appendTableDataAboutVegetable(item.name);
@@ -107,45 +124,10 @@ $('.card__item').click(function () {
   $('#positionselect').fadeIn(500);
 });
 
-// 選擇店家
-$('#positionselect').on('click', '.btn--icon', function () {
-  const index = $('.btn--icon').index($(this));
-
-  // 取得 table 資料
-  item.farmerName = $('tbody').children().eq(index).children()
-    .eq(0)
-    .text();
-  item.quantity = parseInt($('tbody').children().eq(index).children()
-    .eq(2)
-    .text(), 10);
-  item.price = parseInt($('tbody').children().eq(index).children()
-    .eq(3)
-    .text(), 10);
-
-  // 彈出詢問視窗
-  $('.addItems').children().eq(0).children()
-    .text(item.name);
-  for (let i = 1; i <= item.quantity; i += 1) {
-    $('<option>').text(i).appendTo('select');
-  }
-  $('.addItems').fadeIn(100);
-});
-
-// 新增到購物車
+// Step 2: 新增到購物車
+// TODO: try .add
 $('.addItems').on('click', 'button', function () {
   const index = $('.addItems button').index($(this));
-  const now = new Date();
-  const date = [
-    now.getFullYear(),
-    now.getMonth() + 1,
-    now.getDate(),
-  ];
-  if (now.getMonth() + 1 < 10) {
-    date[1] = `0 + ${(now.getMonth() + 1)}`;
-  }
-  if (now.getDate() + 1 < 10) {
-    date[2] = `0 + ${now.getDate()}`;
-  }
 
   if (index === 1) {
     // 取得選取的蔬果數量
@@ -154,22 +136,22 @@ $('.addItems').on('click', 'button', function () {
 
     // 新增 OrderItem 物件
     orders.push(new OrderItem());
-    orders[orderIndex].foodName = item.name;
+    orders[orderIndex].vegeName = item.name;
     orders[orderIndex].farmerName = item.farmer;
-    orders[orderIndex].foodQuantity = item.quantity;
-    orders[orderIndex].foodPrice = item.price;
-    orders[orderIndex].cost = item.total;
-    orders[orderIndex].date = date.join('-');
+    orders[orderIndex].vegeQuantity = item.quantity;
+    orders[orderIndex].vegePrice = item.price;
+    orders[orderIndex].profit = item.total;
+    orders[orderIndex].orderDate = new Date();
 
     // 放進購物車
     $('.shoppingcart__list').append(
       `<div class="shoppingcart__listitem">  
         <div style="display:flex;justify-content:space-between;align-items: center;"> 
           <button class="btn--icon delete"><i class="fas fa-times"></i></button>&nbsp;&nbsp;                     
-          <p><span>${orders[orderIndex].foodName}</span></p>
+          <p><span>${orders[orderIndex].vegeName}</span></p>
         </div>
-        <p><span>${orders[orderIndex].foodQuantity}</span>&nbsp;kg</p>
-        <p><span>${orders[orderIndex].cost}</span>&nbsp;元</p>              
+        <p><span>${orders[orderIndex].vegeQuantity}</span>&nbsp;kg</p>
+        <p><span>${orders[orderIndex].profit}</span>&nbsp;元</p>              
       </div>`
     );
     orderIndex += 1;
@@ -178,7 +160,7 @@ $('.addItems').on('click', 'button', function () {
   $('.addItems').fadeOut(100);
 });
 
-// 刪除購物車內的訂單
+// Step 3: 刪除購物車內的訂單
 $('.shoppingcart__list').on('click', '.delete', function () {
   const index = $(this).parent().parent().index();
 
@@ -187,12 +169,7 @@ $('.shoppingcart__list').on('click', '.delete', function () {
   orderIndex -= 1;
 });
 
-// 購物車按鈕
-$('.shoppingcart__button').on('click', () => {
-  $('.shoppingcart__list').toggle();
-});
-
-// FIXME: 前往確認結帳畫面
+// Step 4: 前往確認結帳畫面
 $('#positionselect').on('click', '.btn', function () {
   const index = $('.btn').index($(this));
   let totalCost = 0;
@@ -209,24 +186,27 @@ $('#positionselect').on('click', '.btn', function () {
       for (let i = 0; i < orders.length; i += 1) {
         $('#ordercomfirm tbody').append(
           `<tr>
-              <td>${orders[i].foodName}</td>
+              <td>${orders[i].vegeName}</td>
               <td>${orders[i].farmerName}</td>
-              <td>${orders[i].foodQuantity}</td>
-              <td>${orders[i].foodPrice}</td>
+              <td>${orders[i].vegeQuantity}</td>
+              <td>${orders[i].profit}</td>
             </tr>`
         );
 
         // 計算總金額
-        totalCost += orders[i].foodPrice;
+        totalCost += orders[i].profit;
       }
       $('#totalCost').text(totalCost);
-      console.log(orders);
+
+      // TODO: test
+      // console.log(orders);
       break;
     default:
       break;
   }
 });
 
+// Step 5: 確認結帳
 $('#ordercomfirm').on('click', '.btn', function () {
   const index = $('.btn').index($(this));
 
@@ -239,9 +219,15 @@ $('#ordercomfirm').on('click', '.btn', function () {
   orderIndex = 0;
   orders = [];
   $('.shoppingcart__list').empty();
+  $('#positionselect tbody').empty();
   $('#ordercomfirm tbody').empty();
 
   $('#ordercomfirm').hide();
   $('#foodselect').show();
   $('.shoppingcart__button').show();
+});
+
+// 購物車按鈕
+$('.shoppingcart__button').on('click', () => {
+  $('.shoppingcart__list').toggle();
 });

@@ -1,5 +1,3 @@
-// 取列表長度，大於=>多出來的部分 post; 小於等於=> put
-
 class VegetableItem {
   constructor() {
     this.vegeName = '';
@@ -54,15 +52,15 @@ function getAllVegetableOnShelf(id) {
     });
 }
 
-// 取得列表上所有的蔬果資料
+// 取得列表上新增所有的蔬果資料
 function getNewVegetables() {
-  const newVegetablesLength = $('.vegetable').children('.vegetable__item').length - numOfVegetablesOnShelf;
+  const newVegetablesLength = $('.vegetable').children('.vegetable__item').length;
 
-  for (let i = 0; i < newVegetablesLength; i += 1) {
+  for (let i = numOfVegetablesOnShelf; i < newVegetablesLength; i += 1) {
     newVegetables.push(new VegetableItem());
-    newVegetables[i].vegeName = $('.vegetable__item').eq((newVegetablesLength + i)).children('input[name=vegeName]').val();
-    newVegetables[i].vegeQuantity = parseInt($('.vegetable__item').eq((newVegetablesLength + i)).children('input[name=vegeQuantity]').val(), 10);
-    newVegetables[i].vegePrice = parseInt($('.vegetable__item').eq((newVegetablesLength + i)).children('input[name=vegePrice]').val(), 10);
+    newVegetables[i].vegeName = $('.vegetable__item').eq(i).children('input[name=vegeName]').val();
+    newVegetables[i].vegeQuantity = parseInt($('.vegetable__item').eq(i).children('span').children('input[name=vegeQuantity]').val(), 10);
+    newVegetables[i].vegePrice = parseInt($('.vegetable__item').eq(i).children('span').children('input[name=vegePrice]').val(), 10);
   }
 }
 
@@ -115,6 +113,7 @@ $('#shelf').click(() => {
   getNewVegetables();
 
   for (i = 0; i < newVegetables.length; i += 1) {
+    newVegetables[i].FarmerID = farmerID;
     postVegetablesOnShelf(newVegetables[i]);
   }
   alert('post items successfully!');
