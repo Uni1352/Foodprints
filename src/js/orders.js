@@ -12,6 +12,7 @@ function appendHistoryOrderItems(orders, idnum) {
   $.each(orders, (index, element) => {
     if (element.userID === parseInt(idnum, 10)) {
       const date = new Date(element.orderDate);
+      // TODO: change date format
       $('tbody').append(`<tr>
           <td>${date.toDateString()}</td>
           <td>${element.items.foodName}</td>
@@ -24,13 +25,13 @@ function appendHistoryOrderItems(orders, idnum) {
 }
 
 function getOrders() {
-  const idNumber = getCookie('userID');
+  const userid = getCookie('userID');
   const usertype = getCookie('userType');
 
   if (usertype === 'restaurant') {
     $.get('https://graduation.jj97181818.me/api/orders?history=1')
       .done((res) => {
-        appendHistoryOrderItems(res, idNumber);
+        appendHistoryOrderItems(res, userid);
       })
       .fail(() => {
         alert('Error!');

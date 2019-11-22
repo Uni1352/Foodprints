@@ -2,6 +2,7 @@ class OrderItem {
   constructor() {
     this.vegeName = '';
     this.farmerName = '';
+    this.farmerID = 0;
     this.vegeQuantity = 0;
     this.vegePrice = 0;
     this.profit = 0;
@@ -12,12 +13,14 @@ class OrderItem {
 const item = {
   name: '',
   farmer: '',
+  farmerID: 0,
   quantity: 0,
   price: 0,
   total: 0
 };
-const farmers = {};
-let userdata = {};
+const farmers = [];
+const farmersID = [];
+let userAddress = '';
 let orders = [];
 let orderIndex = 0;
 
@@ -34,7 +37,7 @@ function getCookie(cname) {
 function getUserData(id) {
   $.get(`https://graduation.jj97181818.me/api/users/${id}`)
     .done((res) => {
-      userdata = res;
+      userAddress = res.address;
     })
     .fail(() => {
       alert('Failed to get user data.');
@@ -50,23 +53,8 @@ function getFarmersData() {
     });
 }
 
-function appendTableDataAboutVegetable(vegetableName) {
-  $.each(farmers, (index, element) => {
-    if (element.vegetables.vegeName === vegetableName) {
-      $('#positionselect>table').children('tbody').append(`<tr>
-        <td>${element.name}</td>
-        <td>${element.address}</td>
-        <td>${element.vegetables.vegeQuantity}</td>
-        <td>${element.vegetables.vegePrice}</td>
-        <td><button class="btn--icon add"><i class="fas fa-plus"></i></button></td>
-      </tr>`);
-    }
-  });
-}
-
 // 上傳訂購物件
 function postOrders(list) {
-  // FIXME: farmerID => farmerName？
   // FIXME: 地址經緯度
   $.each(list, (index, element) => {
     const order = {
@@ -74,19 +62,20 @@ function postOrders(list) {
       status: 0,
       profit: element.profit,
       orderDate: element.orderDate,
-      address: userdata.address,
+      address: userAddress,
       location: {
         latitude: '',
         longtitude: ''
       },
       items: {
         foodName: element.vegeName,
-        farmerID: element.farmerName,
+        farmerID: element.farmerID,
         foodQuantity: element.vegeQuantity,
         foodPrice: element.vegePrice
       }
     };
 
+    console.log(order);
     $.ajax({
       type: 'post',
       url: 'https://graduation.jj97181818.me/api/orders',
@@ -107,10 +96,6 @@ $(document).ready(() => {
   getUserData(userID);
   getFarmersData();
 
-  // TODO: test
-  // console.log(userdata);
-  // console.log(farmers);
-
   $('#positionselect').hide();
   $('#ordercomfirm').hide();
 });
@@ -118,14 +103,53 @@ $(document).ready(() => {
 // Step 1: 選擇要購買的蔬果
 $('.card__item').click(function () {
   item.name = $(this).children('h3').text();
-  appendTableDataAboutVegetable(item.name);
+
+  // 擁有該蔬果的店家列表
+  $.each(farmers, (index, element) => {
+    $.each(element.vegetables, (indexValue, vegeItem) => {
+      if (vegeItem.vegeName === item.name) {
+        $('#positionselect>table').children('tbody').append(`<tr>
+          <td>${element.name}</td>
+          <td>${element.address}</td>
+          <td>${vegeItem.vegeQuantity}</td>
+          <td>${vegeItem.vegePrice}</td>
+          <td><button class="btn--icon add"><i class="fas fa-plus"></i></button></td>
+        </tr>`);
+        farmersID.push(element.id);
+      }
+    });
+  });
 
   $('#foodselect').hide();
   $('#positionselect').fadeIn(500);
 });
 
-// Step 2: 新增到購物車
-// TODO: try .add
+// Step 2: 新增訂購蔬果資料
+$('#positionselect').on('click', '.add', function () {
+  const index = $('.add').index($(this));
+
+  // get table data
+  item.farmer = $('tbody').children().eq(index).children()
+    .eq(0)
+    .text();
+  item.quantity = parseInt($('tbody').children().eq(index).children()
+    .eq(2)
+    .text(), 10);
+  item.price = parseInt($('tbody').children().eq(index).children()
+    .eq(3)
+    .text(), 10);
+  item.farmerID = farmersID[index];
+
+  // 彈出詢問視窗
+  $('.addItems ').children().eq(0).children()
+    .text(item.name);
+  for (let i = 1; i <= item.quantity; i += 1) {
+    $('<option>').text(i).appendTo('select');
+  }
+  $('.addItems ').fadeIn(100);
+});
+
+// Step 3: 新增到購物車
 $('.addItems').on('click', 'button', function () {
   const index = $('.addItems button').index($(this));
 
@@ -138,6 +162,7 @@ $('.addItems').on('click', 'button', function () {
     orders.push(new OrderItem());
     orders[orderIndex].vegeName = item.name;
     orders[orderIndex].farmerName = item.farmer;
+    orders[orderIndex].farmerID = item.farmerID;
     orders[orderIndex].vegeQuantity = item.quantity;
     orders[orderIndex].vegePrice = item.price;
     orders[orderIndex].profit = item.total;
@@ -160,7 +185,7 @@ $('.addItems').on('click', 'button', function () {
   $('.addItems').fadeOut(100);
 });
 
-// Step 3: 刪除購物車內的訂單
+// Step 4: 刪除購物車內的訂單
 $('.shoppingcart__list').on('click', '.delete', function () {
   const index = $(this).parent().parent().index();
 
@@ -169,7 +194,7 @@ $('.shoppingcart__list').on('click', '.delete', function () {
   orderIndex -= 1;
 });
 
-// Step 4: 前往確認結帳畫面
+// Step 5: 前往確認結帳畫面
 $('#positionselect').on('click', '.btn', function () {
   const index = $('.btn').index($(this));
   let totalCost = 0;
@@ -178,6 +203,7 @@ $('#positionselect').on('click', '.btn', function () {
   switch (index) {
     case 1:
       $('#foodselect').fadeIn(500);
+      $('#positionselect tbody').empty();
       break;
     case 2:
       $('.shoppingcart__button').hide();
@@ -198,15 +224,13 @@ $('#positionselect').on('click', '.btn', function () {
       }
       $('#totalCost').text(totalCost);
 
-      // TODO: test
-      // console.log(orders);
       break;
     default:
       break;
   }
 });
 
-// Step 5: 確認結帳
+// Step 6: 確認結帳
 $('#ordercomfirm').on('click', '.btn', function () {
   const index = $('.btn').index($(this));
 
@@ -226,6 +250,7 @@ $('#ordercomfirm').on('click', '.btn', function () {
   $('#foodselect').show();
   $('.shoppingcart__button').show();
 });
+
 
 // 購物車按鈕
 $('.shoppingcart__button').on('click', () => {
