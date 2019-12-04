@@ -6,9 +6,11 @@ class VegetableItem {
   }
 }
 
+const oldVegetables = [];
 const newVegetables = [];
 let farmerID = '';
-let numOfVegetablesOnShelf = 0;
+let oldVegeNames = [];
+let newVegeNames = [];
 
 function getCookie(cname) {
   const name = `${cname}=`;
@@ -44,24 +46,74 @@ function appendVegetablesOnShelf(veges) {
 function getAllVegetableOnShelf(id) {
   $.get(`https://graduation.jj97181818.me/api/farmers/${id}`)
     .done((res) => {
+      $.each(res.vegetables, (index, element) => {
+        oldVegetables.push(element);
+      });
+      oldVegeNames = $.map(res.vegetables, (item) => item.vegeName);
       appendVegetablesOnShelf(res.vegetables);
-      numOfVegetablesOnShelf = res.vegetables.length;
     })
     .fail(() => {
       alert('Error!');
     });
 }
 
-// 取得列表上新增所有的蔬果資料
+// 取得列表上所有的蔬果資料
 function getNewVegetables() {
   const newVegetablesLength = $('.vegetable').children('.vegetable__item').length;
 
-  for (let i = numOfVegetablesOnShelf; i < newVegetablesLength; i += 1) {
+  for (let i = 0; i < newVegetablesLength; i += 1) {
     newVegetables.push(new VegetableItem());
     newVegetables[i].vegeName = $('.vegetable__item').eq(i).children('input[name=vegeName]').val();
-    newVegetables[i].vegeQuantity = parseInt($('.vegetable__item').eq(i).children('span').children('input[name=vegeQuantity]').val(), 10);
-    newVegetables[i].vegePrice = parseInt($('.vegetable__item').eq(i).children('span').children('input[name=vegePrice]').val(), 10);
+    newVegetables[i].vegeQuantity = parseInt($('.vegetable__item').eq(i).children('span').children('input[name=vegeQuantity]')
+      .val(), 10);
+    newVegetables[i].vegePrice = parseInt($('.vegetable__item').eq(i).children('span').children('input[name=vegePrice]')
+      .val(), 10);
   }
+  newVegeNames = $.map(newVegetables, (item) => item.vegeName);
+}
+
+// 新增新的蔬果資料
+function postVegetablesOnShelf(veges) {
+  $.ajax({
+    type: 'post',
+    url: 'https://graduation.jj97181818.me/api/items',
+    contentType: 'application/json',
+    proccessData: false,
+    data: JSON.stringify(veges),
+    error() {
+      alert('Failed to post items.');
+      window.location.reload();
+    }
+  });
+}
+
+// 修改現有的蔬果資料
+function putVegetablesOnShelf(id, veges) {
+  $.ajax({
+    type: 'put',
+    url: `https://graduation.jj97181818.me/api/items/${id}`,
+    contentType: 'application/json',
+    proccessData: false,
+    data: JSON.stringify(veges),
+    error() {
+      alert('Failed to post items.');
+      window.location.reload();
+    }
+  });
+}
+
+// 刪除已有的蔬果資料
+function deleteVegetablesOnShelf(id) {
+  $.ajax({
+    type: 'delete',
+    url: `https://graduation.jj97181818.me/api/items/${id}`,
+    contentType: 'application/json',
+    proccessData: false,
+    error() {
+      alert('Failed to delete items.');
+      window.location.reload();
+    }
+  });
 }
 
 $(document).ready(() => {
@@ -86,36 +138,40 @@ $('.vegetable>:last-child').click(() => {
 
 // 要刪除的商品
 $('.vegetable').on('click', '.delete', function () {
-  const index = $(this).parent().index();
-
-  if (index > numOfVegetablesOnShelf) {
-    $(this).parent().parent().remove();
-  }
+  $(this).parent().parent().remove();
 });
-
-// 新增新的蔬果資料
-function postVegetablesOnShelf(veges) {
-  $.ajax({
-    type: 'post',
-    url: 'https://graduation.jj97181818.me/api/items',
-    contentType: 'application/json',
-    proccessData: false,
-    data: JSON.stringify(veges),
-    error() {
-      alert('Failed to post items.');
-      window.location.reload();
-    }
-  });
-}
 
 // 商品上架
 $('#shelf').click(() => {
   getNewVegetables();
 
-  for (i = 0; i < newVegetables.length; i += 1) {
-    newVegetables[i].FarmerID = farmerID;
-    postVegetablesOnShelf(newVegetables[i]);
+  const vegeToBeDelete = oldVegeNames.filter((item) => newVegeNames.indexOf(item) === -1);
+  const vegeToBeModify = newVegeNames.filter((item) => oldVegeNames.indexOf(item) !== -1);
+  const vegeToBeAdd = newVegeNames.filter((item) => oldVegeNames.indexOf(item) === -1);
+
+  // 新增上架蔬果
+  for (let i = 0; i < vegeToBeAdd.length; i += 1) {
+    const index = newVegeNames.indexOf(vegeToBeAdd[i]);
+
+    newVegetables[index].FarmerID = parseInt(farmerID, 10);
+    postVegetablesOnShelf(newVegetables[index]);
   }
-  alert('post items successfully!');
+
+  // 刪除架上蔬果
+  for (let i = 0; i < vegeToBeDelete.length; i += 1) {
+    const index = oldVegeNames.indexOf(vegeToBeDelete[i]);
+
+    deleteVegetablesOnShelf(oldVegetables[index].id);
+  }
+
+  // 修改架上蔬果
+  for (let i = 0; i < vegeToBeModify.length; i += 1) {
+    const indexOfOldVeges = oldVegeNames.indexOf(vegeToBeModify[i]);
+    const indexOfNewVeges = newVegeNames.indexOf(vegeToBeModify[i]);
+
+    putVegetablesOnShelf(oldVegetables[indexOfOldVeges].id, newVegetables[indexOfNewVeges]);
+  }
+
+  alert('put vegetables on shelf successfully!');
   window.location.reload();
 });

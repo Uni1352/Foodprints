@@ -7,6 +7,10 @@ $('#register').click(() => {
     email: $('#useremail').val(),
     address: $('#useraddress').val(),
     cellphone: $('#userphone').val(),
+    location: {
+      latitude: '',
+      longitude: ''
+    }
   };
 
   if (usertype === 'restaurant') {
@@ -26,8 +30,7 @@ $('#register').click(() => {
       }
     });
   } else if (usertype === 'farmer') {
-    newUser.location.latitude = '';
-    newUser.location.longtitude = '';
+    processFormData();
 
     $.ajax({
       type: 'post',
