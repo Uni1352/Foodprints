@@ -1,4 +1,13 @@
-$('#register').click(() => {
+let addressLocation = '';
+
+const platform = new H.service.Platform({
+  app_id: 'uPrGO98RB3S0t69Svy9J',
+  app_code: 'PJs_iKqQv3lbTh4t8Vx00w',
+  useCIT: true,
+  useHTTPS: true
+});
+
+function postUserData(loc) {
   const usertype = $('input[name=usertype]:checked').val();
   const newUser = {
     name: $('#name').val(),
@@ -7,12 +16,11 @@ $('#register').click(() => {
     email: $('#useremail').val(),
     address: $('#useraddress').val(),
     cellphone: $('#userphone').val(),
-    location: {
-      latitude: '',
-      longitude: ''
-    }
+    location: {}
   };
 
+  newUser.location.latitude = loc[0].location.displayPosition.latitude;
+  newUser.location.longitude = loc[0].location.displayPosition.longitude;
   if (usertype === 'restaurant') {
     $.ajax({
       type: 'post',
@@ -30,8 +38,6 @@ $('#register').click(() => {
       }
     });
   } else if (usertype === 'farmer') {
-    processFormData();
-
     $.ajax({
       type: 'post',
       url: 'https://graduation.jj97181818.me/api/farmers',
@@ -48,4 +54,34 @@ $('#register').click(() => {
       }
     });
   }
+}
+
+function onSuccess(result) {
+  const locations = result.response.view[0].result;
+
+  postUserData(locations);
+}
+
+function onError() {
+  alert('Can\'t reach the remote server');
+}
+
+// 接收platform的訊息做geocoding
+function geocode(p) {
+  const geocoder = p.getGeocodingService();
+  const geocodingParameters = {
+    searchText: addressLocation,
+    jsonattributes: 1
+  };
+
+  geocoder.geocode(
+    geocodingParameters,
+    onSuccess,
+    onError
+  );
+}
+
+$('#register').click(() => {
+  addressLocation = $('#useraddress').val();
+  geocode(platform);
 });
