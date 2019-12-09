@@ -19,7 +19,7 @@ const item = {
   total: 0
 };
 const farmers = [];
-const farmersID = [];
+let farmersID = [];
 let userAddress = '';
 let orders = [];
 let orderIndex = 0;
@@ -55,7 +55,6 @@ function getFarmersData() {
 
 // 上傳訂購物件
 function postOrders(list) {
-  // FIXME: 地址經緯度
   $.each(list, (index, element) => {
     const order = {
       userID: parseInt(getCookie('userID'), 10),
@@ -63,10 +62,6 @@ function postOrders(list) {
       profit: element.profit,
       orderDate: element.orderDate,
       address: userAddress,
-      location: {
-        latitude: '',
-        longtitude: ''
-      },
       items: {
         foodName: element.vegeName,
         farmerID: element.farmerID,
@@ -105,6 +100,7 @@ $('.card__item').click(function () {
   item.name = $(this).children('h3').text();
 
   // 擁有該蔬果的店家列表
+  // TODO: 抓取有該詞彙的店家列表
   $.each(farmers, (index, element) => {
     $.each(element.vegetables, (indexValue, vegeItem) => {
       if (vegeItem.vegeName === item.name) {
@@ -242,6 +238,7 @@ $('#ordercomfirm').on('click', '.btn', function () {
   // 歸零
   orderIndex = 0;
   orders = [];
+  farmersID = [];
   $('.shoppingcart__list').empty();
   $('#positionselect tbody').empty();
   $('#ordercomfirm tbody').empty();

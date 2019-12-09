@@ -133,6 +133,9 @@ $('.vegetable>:last-child').click(() => {
               <input type="number" name="vegePrice" min="0" placeholder="單價">
               元/公斤
             </span>
+            <span style="align-self: center;">
+              <div class="btn--icon delete"><i class="fas fa-times"></i></div>
+            </span>
           </div>`);
 });
 

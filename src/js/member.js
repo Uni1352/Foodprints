@@ -16,12 +16,21 @@ function getCookie(cname) {
 }
 
 $(document).ready(() => {
+  const userID = getCookie('userID');
   const usertype = getCookie('userType');
 
-  if (usertype === 'farmer') {
-    $('#restaurant').hide();
-  } else if (usertype === 'restaurant') {
-    $('#farmer').hide();
+  if (userID !== '') {
+    $('#loginForm').hide();
+    $('#memberLinks').show();
+
+    if (usertype === 'farmer') {
+      $('#restaurant').hide();
+    } else if (usertype === 'restaurant') {
+      $('#farmer').hide();
+    }
+  } else {
+    $('#memberLinks').hide();
+    $('#loginForm').show();
   }
 });
 

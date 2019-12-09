@@ -22,7 +22,8 @@ $('#login').click(() => {
     success(res) {
       setCookie('userID', res.ID, 1);
       setCookie('userType', user.identity, 1);
-      window.location = 'https://graduation.jj97181818.me/src/pages/member.html';
+      window.location = 'https://graduation.jj97181818.me/';
+      // window.location.reload();
     },
     error() {
       alert('Failed to login. Please try once again.');
