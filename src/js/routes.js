@@ -1,67 +1,29 @@
 const orderIDNumber = [];
 const orderSeqNumber = [];
 const farmerLocation = {
+  name: '',
   lat: '',
   lng: ''
 };
-
-function getCookie(cname) {
-  const name = `${cname}=`;
-  const ca = document.cookie.split(';');
-  for (let i = 0; i < ca.length; i += 1) {
-    const c = ca[i].trim();
-    if (c.indexOf(name) === 0) return c.substring(name.length, c.length);
-  }
-  return '';
-}
-
-// ---------------------------------------------------------------------
-
-// 畫圖
-// Step 0: set up containers for the map  + panel
+const restaurantLocations = [];
 const mapContainer = document.getElementById('map');
-const routeInstructionsContainer = document.getElementById('panel');
-
-// Step 1: initialize communication with the platform
 const platform = new H.service.Platform({
-  app_id: 'uPrGO98RB3S0t69Svy9J',
-  app_code: 'PJs_iKqQv3lbTh4t8Vx00w',
+  apikey: '9-5DYn8Zq0T6i8t46hNl0E2w5m-00Mx2nzW6h5CtuEA',
   useCIT: true,
   useHTTPS: true
 });
 const defaultLayers = platform.createDefaultLayers();
-
-// Step 2: initialize a map - this map is centered over Taiwan
-const map = new H.Map(mapContainer, defaultLayers.normal.map, {
+const map = new H.Map(mapContainer, defaultLayers.raster.normal.map, {
+  zoom: 12.5,
   center: {
-    lat: 25,
-    lng: 121
-  },
-  zoom: 6
+    lat: 25.0216828,
+    lng: 121.5264134
+  }
 });
-// add a resize listener to make sure that the map occupies the whole container
-window.addEventListener('resize', () => map.getViewPort().resize());
-
-// const locationsContainer = document.getElementById('panel');
-
-// Step 3: make the map interactive
-// Behavior implements default interactions for pan/zoom (also on mobile touch environments)
-// const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
-// Create the default UI components
 const ui = H.ui.UI.createDefault(map, defaultLayers);
-
-function moveMapToTaipei(m) {
-  m.setCenter({
-    lat: 25.0192822,
-    lng: 121.5395547
-  });
-  m.setZoom(14);
-}
-
-// Step 4:use the map as required...
-window.onload = function () {
-  moveMapToTaipei(map);
-};
+const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+const markerGroup = new H.map.Group();
+const markerGroups = [];
 
 // 切換語言
 function setBaseLayer(m, p) {
@@ -80,261 +42,141 @@ function setBaseLayer(m, p) {
   );
   m.setBaseLayer(tileLayer);
 }
-setBaseLayer(map, platform);
 
-// 泡泡資訊窗
-// let bubble;
+function addInfoBubble(markerPos) {
+  markerPos.addEventListener('tap', (evt) => {
+    const bubble = new H.ui.InfoBubble(evt.target.getGeometry(), {
+      content: `${evt.target.getData()}`
+    });
+    ui.addBubble(bubble);
+  });
+}
 
-// function openBubble(position, text) {
-//   if (!bubble) {
-//     bubble = new H.ui.InfoBubble(
-//       position, {
-//         content: text
-//       }
-//     );
-//     ui.addBubble(bubble);
-//   } else {
-//     bubble.setPosition(position);
-//     bubble.setContent(text);
-//     bubble.open();
-//   }
-// }
-
-// 路徑規劃的線畫在地圖上 H.map.Polyline
-function addRouteShapeToMap(route) {
+function addRouteShapeToMap(r) {
+  const routeShape = r.shape;
   const lineString = new H.geo.LineString();
-  const routeShape = route.shape;
 
   routeShape.forEach((point) => {
     const parts = point.split(',');
     lineString.pushLatLngAlt(parts[0], parts[1]);
   });
 
-  const polyline = new H.map.Polyline(lineString, {
+  const routeOutline = new H.map.Polyline(lineString, {
     style: {
-      lineWidth: 10,
-      strokeColor: 'rgba(0, 128, 255, 0.7)'
-    },
-    arrows: {
-      fillColor: 'white',
-      frequency: 2,
-      width: 0.8,
-      length: 0.7
+      lineWidth: 5,
+      strokeColor: 'rgba(0, 128, 255, 1)',
+      lineTailCap: 'arrow-tail',
+      lineHeadCap: 'arrow-head'
     }
   });
-  // Add the polyline to the map
-  map.addObject(polyline);
-  // And zoom to its bounding rectangle
-  map.setViewBounds(polyline.getBounds(), true);
-}
-
-// 路徑規劃上的點畫在地圖上H.map.Marker points on Map
-// function addManueversToMap(route) {
-//   const group = new H.map.Group();
-//   let i;
-//   let j;
-
-//   // Add a marker for each maneuver
-//   for (i = 0; i < route.leg.length; i += 1) {
-//     for (j = 0; j < route.leg[i].maneuver.length; j += 1) {
-//       // Get the next maneuver.
-//       maneuver = route.leg[i].maneuver[j];
-//       // Add a marker to the maneuvers group
-//       const marker = new H.map.Marker({
-//         lat: maneuver.position.latitude,
-//         lng: maneuver.position.longitude
-//       });
-//       marker.instruction = maneuver.instruction;
-//       group.addObject(marker);
-//     }
-//   }
-
-//   group.addEventListener('tap', (evt) => {
-//     map.setCenter(evt.target.getPosition());
-//   }, false);
-
-//   // Add the maneuvers group to the map
-//   map.addObject(group);
-// }
-
-// 路徑規劃上的點(起點、迄點)顯示在Panel上 H.map.Marker points on Panel
-function addWaypointsToPanel(waypoints) {
-  const nodeH3 = document.createElement('h3');
-  const waypointLabels = [];
-  let i;
-
-
-  for (i = 0; i < waypoints.length; i += 1) {
-    waypointLabels.push(waypoints[i].label);
-  }
-
-  nodeH3.textContent = waypointLabels.join(' - ');
-
-  routeInstructionsContainer.innerHTML = '';
-  routeInstructionsContainer.appendChild(nodeH3);
-}
-
-// 路徑規劃的總里程、預估旅行時間顯示在Panel上 H.map.Marker points on Panel
-function addSummaryToPanel(summary) {
-  const summaryDiv = document.createElement('div');
-  let content = '';
-  content += `<b>Total distance</b>: ${summary.distance}m. <br/>`;
-  content += `<b>Travel Time</b>: ${summary.travelTime.toMMSS()} (in current traffic)`;
-
-
-  summaryDiv.style.fontSize = 'small';
-  summaryDiv.style.marginLeft = '5%';
-  summaryDiv.style.marginRight = '5%';
-  summaryDiv.innerHTML = content;
-  routeInstructionsContainer.appendChild(summaryDiv);
-}
-
-// 路徑規劃上的點(中途幾個點)顯示在Panel上 H.map.Marker points on Panel
-function addManueversToPanel(route) {
-  const nodeOL = document.createElement('ol');
-  let i;
-  let j;
-
-  nodeOL.style.fontSize = 'small';
-  nodeOL.style.marginLeft = '5%';
-  nodeOL.style.marginRight = '5%';
-  nodeOL.className = 'directions';
-
-  // Add a marker for each maneuver
-  for (i = 0; i < route.leg.length; i += 1) {
-    for (j = 0; j < route.leg[i].maneuver.length; j += 1) {
-      // Get the next maneuver.
-      maneuver = route.leg[i].maneuver[j];
-
-      const li = document.createElement('li');
-      const spanArrow = document.createElement('span');
-      const spanInstruction = document.createElement('span');
-
-      spanArrow.className = `arrow ${maneuver.action}`;
-      spanInstruction.innerHTML = maneuver.instruction;
-      li.appendChild(spanArrow);
-      li.appendChild(spanInstruction);
-
-      nodeOL.appendChild(li);
+  const routeArrows = new H.map.Polyline(lineString, {
+    style: {
+      lineWidth: 5,
+      fillColor: 'white',
+      strokeColor: 'rgba(255, 255, 255, 1)',
+      lineDash: [0, 2],
+      lineTailCap: 'arrow-tail',
+      lineHeadCap: 'arrow-head'
     }
-  }
+  });
 
-  routeInstructionsContainer.appendChild(nodeOL);
+  const routeLine = new H.map.Group();
+
+  map.addObject(routeLine);
+  routeLine.addObject(routeOutline);
+  routeLine.addObject(routeArrows);
+  map.getViewModel().setLookAtData({
+    zoom: 12.5,
+    bounds: routeLine.getBoundingBox()
+  }, true);
 }
 
-function onSuccess(result) {
+function addPositionMarker(pos, index, seq) {
+  const svgMarkup = `<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+                    <rect stroke="white" fill="#ed0034" x="1" y="1" width="22" height="22" />
+                    <text x="12" y="18" font-size="12pt" font-family="Arial" font-weight="bold" 
+                          text-anchor="middle" fill="white">${seq}</text>
+                  </svg>`;
+  const numberDestination = new H.map.Icon(svgMarkup);
+  const marker = new H.map.Marker({
+    lat: pos.lat,
+    lng: pos.lng
+  }, {
+    icon: numberDestination
+  });
+  let positionName = '';
+
+  if (seq === 0) {
+    positionName = farmerLocation.name;
+  } else {
+    // positionName = $(`#route${index + 1} .order .order__item`).eq((seq - 1))
+    //   .children('.order__content').children(`user${orderIDNumber[seq - 1]}`)
+    //   .text();
+    positionName = restaurantLocations[index][seq - 1].name;
+  }
+  marker.setData(positionName);
+  markerGroup.addObject(marker);
+  addInfoBubble(marker);
+}
+
+function onResult(result) {
   const route = result.response.route[0];
 
   addRouteShapeToMap(route);
-  // addManueversToMap(route);
-  addWaypointsToPanel(route.waypoint);
-  addManueversToPanel(route);
-  addSummaryToPanel(route.summary);
 }
 
-function onError() {
-  alert('Can\'t reach the remote server');
+function drawRoutes(routes) {
+  const router = platform.getRoutingService();
+
+  for (let i = 0; i < routes.length; i += 1) {
+    const routingParameters = {
+      mode: 'fastest;car',
+      representation: 'display',
+      routeattributes: 'waypoints,summary,shape,legs',
+      waypoint0: `${farmerLocation.lat},${farmerLocation.lng}`,
+      waypoint1: `${routes[i][0].lat},${routes[i][0].lng}`
+    };
+
+    // 小農 -> 餐廳
+    router.calculateRoute(routingParameters, onResult,
+      (error) => {
+        alert(error.message);
+      });
+    addPositionMarker(farmerLocation, i, 0);
+
+    for (let k = 0; k < routes[i].length; k += 1) {
+      // 餐廳 -> 餐廳
+      if (k !== routes[i].length - 1) {
+        routingParameters.waypoint0 = `${routes[i][k].lat},${routes[i][k].lng}`;
+        routingParameters.waypoint1 = `${routes[i][k + 1].lat},${routes[i][k + 1].lng}`;
+      } else {
+        // 餐廳 -> 小農
+        routingParameters.waypoint0 = `${routes[i][k].lat},${routes[i][k].lng}`;
+        routingParameters.waypoint1 = `${farmerLocation.lat},${farmerLocation.lng}`;
+      }
+
+      router.calculateRoute(routingParameters, onResult,
+        (error) => {
+          alert(error.message);
+        });
+      addPositionMarker(routes[i][k], i, k + 1);
+    }
+    markerGroups.push(markerGroup);
+  }
 }
 
-// 路徑規劃
-function calculateRouteFromAtoB(p) {
-  const router = p.getRoutingService();
-  const routeRequestParams = {
-    mode: 'fastest;car',
-    representation: 'display',
-    routeattributes: 'waypoints,summary,shape,legs',
-    maneuverattributes: 'direction,action',
-    waypoint0: window.Origin, // Brandenburg Gate
-    waypoint1: window.Destination // Friedrichstraße Railway Station
-  };
-
-
-  router.calculateRoute(
-    routeRequestParams,
-    onSuccess,
-    onError
-  );
-}
-
-// 總旅行時間
-Number.prototype.toMMSS = function () {
-  return `${Math.floor(this / 60)} minutes ${this % 60} seconds.`;
-};
-
-// Now use the map as required...
-// calculateRouteFromAtoB (platform);
-
-// 取得json的資料並傳入element
-function processFormData(data) {
-  // const orderIcon = new H.map.Icon('../img/order.png');
-  // let j = 0;
-  // let svgMarkup = `<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
-  //                   <rect stroke="white" fill="#ed0034" x="1" y="1" width="22" height="22" />
-  //                   <text x="12" y="18" font-size="12pt" font-family="Arial" font-weight="bold" 
-  //                         text-anchor="middle" fill="white">${j}</text>
-  //                 </svg>`;
-  // let numberDestination = new H.map.Icon(svgMarkup);
-
-  // $.each(data, (index, element) => {
-  //   window.Origin = `${farmerLocation.lat}, ${farmerLocation.lng}`;
-  //   $.each(element.orders, (i, item) => {
-  //     window.Destination = `${item.latitude},${item.longitude}`;
-  //     calculateRouteFromAtoB(platform);
-
-  //     let orderpointMarker = new H.map.Marker({
-  //       lat: `${item.latitude}`,
-  //       lng: `${item.longitude}`
-  //     }, {
-  //       icon: numberDestination
-  //     });
-  //     j += 1;
-  //     svgMarkup = `<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
-  //                   <rect stroke="white" fill="#ed0034" x="1" y="1" width="22" height="22" />
-  //                   <text x="12" y="18" font-size="12pt" font-family="Arial" font-weight="bold" 
-  //                         text-anchor="middle" fill="white">${j}</text>
-  //                 </svg>`;
-  //     numberDestination = new H.map.Icon(svgMarkup);
-  //     map.setCenter(orderpointMarker.getPosition());
-  //     map.setZoom(14);
-  //     map.addObject(orderpointMarker);
-
-  //     window.Origin = window.Destination;
-
-  //     // 最後回到原點
-  //     if (i === element.orders.length - 1) {
-  //       window.Destination = `${farmerLocation.lat}, ${farmerLocation.lng}`;
-  //       calculateRouteFromAtoB(platform);
-  //       orderpointMarker = new H.map.Marker({
-  //         lat: `${farmerLocation.lat}`,
-  //         lng: `${farmerLocation.lng}`
-  //       }, {
-  //         icon: orderIcon
-  //       });
-  //       j += 1;
-  //       svgMarkup = `<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
-  //                   <rect stroke="white" fill="#ed0034" x="1" y="1" width="22" height="22" />
-  //                   <text x="12" y="18" font-size="12pt" font-family="Arial" font-weight="bold" 
-  //                         text-anchor="middle" fill="white">${j}</text>
-  //                 </svg>`;
-  //       numberDestination = new H.map.Icon(svgMarkup);
-  //       map.setCenter(orderpointMarker.getPosition());
-  //       map.setZoom(14);
-  //       map.addObject(orderpointMarker);
-  //     }
-  //   });
-  // });
-}
-// ---------------------------------------------------------------------
-
-function hideOrderItems() {
-  $('.order').hide();
-  $('.order__content').hide();
-  $('#orders .list__item').children('div:nth-child(2)').hide();
+function getCookie(cname) {
+  const name = `${cname}=`;
+  const ca = document.cookie.split(';');
+  for (let i = 0; i < ca.length; i += 1) {
+    const c = ca[i].trim();
+    if (c.indexOf(name) === 0) return c.substring(name.length, c.length);
+  }
+  return '';
 }
 
 function datetimeFormat(d) {
   const date = [d.getFullYear(), d.getMonth() + 1, d.getDate()];
-  const time = [d.getHours(), d.getMinutes(), d.getSeconds()];
 
   if (date[1] < 10) {
     date[1] = `0${date[1]}`;
@@ -342,17 +184,8 @@ function datetimeFormat(d) {
   if (date[2] < 10) {
     date[2] = `0${date[2]}`;
   }
-  if (time[0] < 10) {
-    time[0] = `0${time[0]}`;
-  }
-  if (time[1] < 10) {
-    time[1] = `0${time[1]}`;
-  }
-  if (time[2] < 10) {
-    time[2] = `0${time[2]}`;
-  }
 
-  return `${date.join('-')} ${time.join(':')}`;
+  return date.join('-');
 }
 
 function appendOrderContent(orders, seqNum, idNum) {
@@ -366,18 +199,19 @@ function appendOrderContent(orders, seqNum, idNum) {
       if (seqNumPos !== -1) {
         routeIDNumber = i + 1;
         orderContentSeq = seqNum[i][seqNumPos];
+        restaurantLocations[i][orderContentSeq].name = element.userName;
+
+        const orderContentData = $(`#route${routeIDNumber} .order .order__item`).eq(orderContentSeq)
+          .children('.order__content');
+
+        orderContentData.children(`.user${element.id}`).text(element.userName);
+        orderContentData.children(`.phone${element.id}`).text(element.userCellphone);
+        orderContentData.children(`.profit${element.id}`).text(element.profit);
+        orderContentData.children(`.food${element.id}`).text(element.items.foodName);
+        orderContentData.children(`.weight${element.id}`).text(element.items.foodQuantity);
         break;
       }
     }
-
-    const orderContentData = $(`#route${routeIDNumber} .order .order__item`).eq(orderContentSeq)
-      .children('.order__content');
-
-    orderContentData.children(`.user${element.id}`).text(element.userName);
-    orderContentData.children(`.phone${element.id}`).text(element.userCellphone);
-    orderContentData.children(`.profit${element.id}`).text(element.profit);
-    orderContentData.children(`.food${element.id}`).text(element.items.foodName);
-    orderContentData.children(`.weight${element.id}`).text(element.items.foodQuantity);
   });
 }
 
@@ -387,7 +221,7 @@ function appendOrderItems(orders, routeID) {
 
   $.each(orders, (index, element) => {
     const seq = element.orderSequence;
-    const date = datetimeFormat(new Date(element.arrivalTime))
+    const orderDate = datetimeFormat(new Date(element.arrivalTime));
 
     $(`#route${routeID} .order .order__item`).eq((seq - 1)).append(`<div class="order__content">
       ID &nbsp;&nbsp;: ${element.orderID} <br />
@@ -395,16 +229,12 @@ function appendOrderItems(orders, routeID) {
       WEIGHT: <span class="weight${element.orderID}"></span> kg <br />
       PROFIT: NT$ <span class="profit${element.orderID}"></span> <br />
       USER &nbsp;: <span class="user${element.orderID}"></span> <br />
-      DATE &nbsp;: ${date} <br />
+      DATE &nbsp;: ${orderDate} <br />
       PHONE : <span class="phone${element.orderID}"></span> <br />
       ADDR &nbsp;: ${element.orderAddress} <br />
     </div>`);
     seqArr.push(seq - 1);
     idArr.push(element.orderID);
-
-    // TODO: test
-    console.log('date');
-    console.log(date);
   });
   orderSeqNumber.push(seqArr);
   orderIDNumber.push(idArr);
@@ -439,6 +269,7 @@ function getFarmer(id) {
     url: `https://graduation.jj97181818.me/api/farmers/${id}`,
     async: false,
     success(res) {
+      farmerLocation.name = res.name;
       farmerLocation.lat = res.location.latitude;
       farmerLocation.lng = res.location.longitude;
     },
@@ -450,6 +281,8 @@ function getFarmer(id) {
 
 function getRoutes(id) {
   const routeList = [];
+  const restaurantPositionSingleRoute = [];
+
   $.ajax({
     type: 'get',
     url: 'https://graduation.jj97181818.me/api/routes',
@@ -458,11 +291,19 @@ function getRoutes(id) {
       $.each(res.routes, (index, element) => {
         if (element.farmerID === parseInt(id, 10)) {
           routeList.push(element);
+          restaurantPositionSingleRoute.length = element.orders.length;
+
+          $.each(element.orders, (indexValue, item) => {
+            restaurantPositionSingleRoute[item.orderSequence - 1] = {
+              lat: item.latitude,
+              lng: item.longitude
+            };
+          });
         }
+        restaurantLocations.push(restaurantPositionSingleRoute);
       });
 
       appendListItems(routeList);
-      processFormData(routeList);
     },
     error() {
       alert('Failed to get data.');
@@ -471,16 +312,17 @@ function getRoutes(id) {
 }
 
 function getOrders() {
-  $.get('https://graduation.jj97181818.me/api/orders')
-    .done((res) => {
+  $.ajax({
+    type: 'get',
+    url: 'https://graduation.jj97181818.me/api/orders',
+    async: false,
+    success(res) {
       appendOrderContent(res, orderSeqNumber, orderIDNumber);
-    })
-    .fail(() => {
-      alert('Error!');
-    })
-    .always(() => {
-      hideOrderItems();
-    });
+    },
+    error() {
+      alert('Failed to get data.');
+    }
+  });
 }
 
 $(document).ready(() => {
@@ -490,8 +332,18 @@ $(document).ready(() => {
   getRoutes(farmerID);
   getOrders();
 
+  // TEST DATA
+  window.addEventListener('resize', () => map.getViewPort().resize());
+  map.addObject(markerGroup);
+  setBaseLayer(map, platform);
+  drawRoutes(restaurantLocations);
+
+
   $('.list').hide();
   $('.tag').css('left', '0');
+  $('.order').hide();
+  $('.order__content').hide();
+  $('#orders .list__item').children('div:nth-child(2)').hide();
 });
 
 // 標籤切換 & 收放
@@ -515,7 +367,7 @@ $('.sidebar').on('click', '.tag', function () {
     $(this).parent().siblings().children('.tag')
       .css('background-color', 'rgb(211, 211, 211)');
     $(this).css('background-color', 'white');
-    $('.tag').css('left', '250px');
+    $('.tag').css('left', '300px');
   }
 });
 
@@ -535,8 +387,10 @@ $('.list').on('click', '.dropdown', function () {
 
   if (re.exec($(this).parent().attr('id'))) {
     const index = $(this).parent().index();
-    console.log(index);
 
-    // TODO: zoom in
+    map.getViewModel().setLookAtData({
+      zoom: 12.5,
+      bounds: markerGroups[index].getBoundingBox()
+    }, true);
   }
 });

@@ -1,4 +1,5 @@
 let userID = '';
+let usertype = '';
 
 function getCookie(cname) {
   const name = `${cname}=`;
@@ -11,18 +12,28 @@ function getCookie(cname) {
 }
 
 function getUserData() {
-  userID = getCookie('userID');
-
-  $.get(`https://graduation.jj97181818.me/api/items/${userID}`)
-    .done((res) => {
-      $('input[name=name]').val(res.name);
-      $('input[name=userEmail]').val(res.email);
-      $('input[name=userAddress]').val(res.address);
-      $('input[name=userPhone]').val(res.cellphone);
-    });
+  if (usertype === 'restaurant') {
+    $.get(`https://graduation.jj97181818.me/api/users/${userID}`)
+      .done((res) => {
+        $('input[name=name]').val(res.name);
+        $('input[name=userEmail]').val(res.email);
+        $('input[name=userAddress]').val(res.address);
+        $('input[name=userPhone]').val(res.cellphone);
+      });
+  } else {
+    $.get(`https://graduation.jj97181818.me/api/farmers/${userID}`)
+      .done((res) => {
+        $('input[name=name]').val(res.name);
+        $('input[name=userEmail]').val(res.email);
+        $('input[name=userAddress]').val(res.address);
+        $('input[name=userPhone]').val(res.cellphone);
+      });
+  }
 }
 
 $(document).ready(() => {
+  userID = getCookie('userID');
+  usertype = getCookie('userType');
   getUserData();
 });
 
@@ -33,7 +44,6 @@ $('#modify').click(() => {
     address: $('input[name=userAddress]').val(),
     cellphone: $('input[name=userPhone]').val()
   };
-  const usertype = getCookie('userType');
 
   if (usertype === 'restaurant') {
     $.ajax({

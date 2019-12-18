@@ -116,7 +116,7 @@ header {
   position: fixed;
   z-index: 2;
   top: 60px;
-  width: 250px; }
+  width: 350px; }
 
 .dropdown, .order__item .dropdown, #orders .list__item .dropdown {
   display: flex;
@@ -124,7 +124,6 @@ header {
   justify-content: flex-start;
   align-items: center;
   padding: 15px;
-  line-height: 94px;
   background-color: #e6e6e6; }
   .dropdown h3, .order__item .dropdown h3, #orders .list__item .dropdown h3,
   .dropdown h4,
@@ -146,6 +145,7 @@ header {
 .order__content, #orders .list__item div:nth-child(2) {
   padding: 10px;
   margin-left: 25px;
+  margin-right: 25px;
   line-height: 1.5em; }
 
 #routes, #orders {
@@ -154,7 +154,7 @@ header {
   justify-content: flex-start;
   align-items: stretch; }
   #routes .list, #orders .list {
-    width: 250px;
+    width: 300px;
     height: calc(100vh - 60px);
     background-color: white;
     box-shadow: 2px 0px 3px rgba(51, 51, 102, 0.5);
@@ -162,7 +162,7 @@ header {
   #routes .tag, #orders .tag {
     position: absolute;
     top: 10px;
-    left: 250px;
+    left: 300px;
     width: 50px;
     height: 100px;
     border-radius: 0 5px 5px 0;

@@ -49,18 +49,12 @@ function appendHistoryOrderItems(orders, idnum) {
 // TODO: 列表優化
 function appendFinishedRoutes(routes, idnum) {
   $.each(routes, (index, element) => {
-    //  && element.finishedPercent === 100
-    if (element.userID === parseInt(idnum, 10)) {
+    if (element.farmerID === parseInt(idnum, 10)) {
       const date = datetimeFormat(new Date(element.date));
       $('tbody').append(`<tr>
           <td>${element.routeID}</td>
           <td>${date}</td>
-          <td>
-            <button class="showDetailsBtn">點我顯示</button>
-            <div class="orderDetails">
-
-            </div>
-          </td>
+          <td></td>
           <td>${element.totalProfit}</td>
         </tr>`);
     }
@@ -68,9 +62,14 @@ function appendFinishedRoutes(routes, idnum) {
 }
 
 function getOrders() {
+
+}
+
+$(document).ready(() => {
   const userid = getCookie('userID');
   const usertype = getCookie('userType');
-
+  // TODO: 定時更新
+  getOrders();
   if (usertype === 'restaurant') {
     $.get('https://graduation.jj97181818.me/api/orders')
       .done((res) => {
@@ -80,18 +79,12 @@ function getOrders() {
         alert('Error!');
       });
   } else if (usertype === 'farmer') {
-    // 抓已完成的路線
-    // $.get('https://graduation.jj97181818.me/api/routes')
-    //   .done((req) => {
-    //     appendOrderItems(req);
-    //   })
-    //   .fail(() => {
-    //     alert('Error!');
-    //   });
+    $.get('https://graduation.jj97181818.me/api/routes')
+      .done((res) => {
+        appendFinishedRoutes(res.routes, userid);
+      })
+      .fail(() => {
+        alert('Error!');
+      });
   }
-}
-
-$(document).ready(() => {
-  // TODO: 定時更新
-  getOrders();
 });
