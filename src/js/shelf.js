@@ -96,7 +96,7 @@ function putVegetablesOnShelf(id, veges) {
     proccessData: false,
     data: JSON.stringify(veges),
     error() {
-      alert('Failed to post items.');
+      alert('Failed to put items.');
       window.location.reload();
     }
   });

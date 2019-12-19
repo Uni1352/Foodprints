@@ -1,8 +1,7 @@
 let addressLocation = '';
 
 const platform = new H.service.Platform({
-  app_id: 'uPrGO98RB3S0t69Svy9J',
-  app_code: 'PJs_iKqQv3lbTh4t8Vx00w',
+  apikey: '9-5DYn8Zq0T6i8t46hNl0E2w5m-00Mx2nzW6h5CtuEA',
   useCIT: true,
   useHTTPS: true
 });

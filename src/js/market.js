@@ -19,7 +19,7 @@ const item = {
   total: 0
 };
 const farmers = [];
-let farmersID = [];
+let farmerIDInTable = [];
 let userAddress = '';
 let orders = [];
 let orderIndex = 0;
@@ -53,6 +53,37 @@ function getFarmersData() {
     });
 }
 
+function putItemsData(list) {
+  const farmerIDList = $.map(farmers, (element) => element.id);
+
+  for (let i = 0; i < list.length; i += 1) {
+    const targetFarmerIndex = farmerIDList.indexOf(list[i].farmerID);
+    const targetFarmerVegetables = farmers[targetFarmerIndex].vegetables;
+
+    for (let j = 0; j < targetFarmerVegetables.length; j += 1) {
+      if (targetFarmerVegetables[j].vegeName === list[i].vegeName) {
+        const modifiedItem = {
+          vegeName: targetFarmerVegetables[j].vegeName,
+          vegeQuantity: targetFarmerVegetables[j].vegeQuantity - list[i].vegeQuantity,
+          vegePrice: targetFarmerVegetables[j].vegePrice
+        };
+
+        $.ajax({
+          type: 'put',
+          url: `https://graduation.jj97181818.me/api/items/${targetFarmerVegetables[j].id}`,
+          contentType: 'application/json',
+          proccessData: false,
+          data: JSON.stringify(modifiedItem),
+          error() {
+            alert('Failed to put items.');
+            window.location.reload();
+          }
+        });
+      }
+    }
+  }
+}
+
 // 上傳訂購物件
 function postOrders(list) {
   $.each(list, (index, element) => {
@@ -70,7 +101,6 @@ function postOrders(list) {
       }
     };
 
-    console.log(order);
     $.ajax({
       type: 'post',
       url: 'https://graduation.jj97181818.me/api/orders',
@@ -111,7 +141,7 @@ $('.card__item').click(function () {
           <td>${vegeItem.vegePrice}</td>
           <td><button class="btn--icon add"><i class="fas fa-plus"></i></button></td>
         </tr>`);
-        farmersID.push(element.id);
+        farmerIDInTable.push(element.id);
       }
     });
   });
@@ -134,7 +164,7 @@ $('#positionselect').on('click', '.add', function () {
   item.price = parseInt($('tbody').children().eq(index).children()
     .eq(3)
     .text(), 10);
-  item.farmerID = farmersID[index];
+  item.farmerID = farmerIDInTable[index];
 
   // 彈出詢問視窗
   $('.addItems ').children().eq(0).children()
@@ -222,7 +252,6 @@ $('#positionselect').on('click', '.btn', function () {
 
       break;
     default:
-      break;
   }
 });
 
@@ -232,13 +261,14 @@ $('#ordercomfirm').on('click', '.btn', function () {
 
   if (index === 4) {
     postOrders(orders);
+    putItemsData(orders);
     alert('訂購成功!!!');
   }
 
   // 歸零
   orderIndex = 0;
   orders = [];
-  farmersID = [];
+  farmerIDInTable = [];
   $('.shoppingcart__list').empty();
   $('#positionselect tbody').empty();
   $('#ordercomfirm tbody').empty();

@@ -24,6 +24,11 @@ const ui = H.ui.UI.createDefault(map, defaultLayers);
 const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
 const markerGroup = new H.map.Group();
 const markerGroups = [];
+const routeLineColor = {
+  r: 0,
+  g: 0,
+  b: 0
+};
 
 // 切換語言
 function setBaseLayer(m, p) {
@@ -64,7 +69,7 @@ function addRouteShapeToMap(r) {
   const routeOutline = new H.map.Polyline(lineString, {
     style: {
       lineWidth: 5,
-      strokeColor: 'rgba(0, 128, 255, 1)',
+      strokeColor: `rgba(${routeLineColor.r}, ${routeLineColor.g}, ${routeLineColor.b}, 1)`,
       lineTailCap: 'arrow-tail',
       lineHeadCap: 'arrow-head'
     }
@@ -109,9 +114,6 @@ function addPositionMarker(pos, index, seq) {
   if (seq === 0) {
     positionName = farmerLocation.name;
   } else {
-    // positionName = $(`#route${index + 1} .order .order__item`).eq((seq - 1))
-    //   .children('.order__content').children(`user${orderIDNumber[seq - 1]}`)
-    //   .text();
     positionName = restaurantLocations[index][seq - 1].name;
   }
   marker.setData(positionName);
@@ -136,6 +138,11 @@ function drawRoutes(routes) {
       waypoint0: `${farmerLocation.lat},${farmerLocation.lng}`,
       waypoint1: `${routes[i][0].lat},${routes[i][0].lng}`
     };
+
+    routeLineColor.r = Math.floor(Math.random() * 256);
+    routeLineColor.g = Math.floor(Math.random() * 256);
+    routeLineColor.b = Math.floor(Math.random() * 256);
+    console.log(routeLineColor);
 
     // 小農 -> 餐廳
     router.calculateRoute(routingParameters, onResult,
@@ -238,6 +245,8 @@ function appendOrderItems(orders, routeID) {
   });
   orderSeqNumber.push(seqArr);
   orderIDNumber.push(idArr);
+  console.log(orderSeqNumber);
+  console.log(orderIDNumber);
 }
 
 function appendListItems(data) {
@@ -332,7 +341,6 @@ $(document).ready(() => {
   getRoutes(farmerID);
   getOrders();
 
-  // TEST DATA
   window.addEventListener('resize', () => map.getViewPort().resize());
   map.addObject(markerGroup);
   setBaseLayer(map, platform);
