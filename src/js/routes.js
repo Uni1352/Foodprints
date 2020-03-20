@@ -14,7 +14,7 @@ const platform = new H.service.Platform({
 });
 const defaultLayers = platform.createDefaultLayers();
 const map = new H.Map(mapContainer, defaultLayers.raster.normal.map, {
-  zoom: 12.5,
+  zoom: 12.75,
   center: {
     lat: 25.0216828,
     lng: 121.5264134
@@ -91,7 +91,6 @@ function addRouteShapeToMap(r) {
   routeLine.addObject(routeOutline);
   routeLine.addObject(routeArrows);
   map.getViewModel().setLookAtData({
-    zoom: 12.5,
     bounds: routeLine.getBoundingBox()
   }, true);
 }
@@ -139,7 +138,7 @@ function drawRoutes(routes) {
       waypoint1: `${routes[i][0].lat},${routes[i][0].lng}`
     };
 
-    routeLineColor.r = Math.floor(Math.random() * 256);
+    routeLineColor.r = Math.floor(Math.random() * 180);
     routeLineColor.g = Math.floor(Math.random() * 256);
     routeLineColor.b = Math.floor(Math.random() * 256);
     console.log(routeLineColor);
@@ -283,7 +282,7 @@ function getFarmer(id) {
       farmerLocation.lng = res.location.longitude;
     },
     error() {
-      alert('Failed to get data.');
+      alert('資料讀取失敗');
     }
   });
 }
@@ -315,7 +314,7 @@ function getRoutes(id) {
       appendListItems(routeList);
     },
     error() {
-      alert('Failed to get data.');
+      alert('資料讀取失敗');
     }
   });
 }
@@ -329,7 +328,7 @@ function getOrders() {
       appendOrderContent(res, orderSeqNumber, orderIDNumber);
     },
     error() {
-      alert('Failed to get data.');
+      alert('資料讀取失敗');
     }
   });
 }
@@ -397,7 +396,6 @@ $('.list').on('click', '.dropdown', function () {
     const index = $(this).parent().index();
 
     map.getViewModel().setLookAtData({
-      zoom: 12.5,
       bounds: markerGroups[index].getBoundingBox()
     }, true);
   }

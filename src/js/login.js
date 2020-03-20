@@ -5,6 +5,11 @@ function setCookie(cname, cvalue, exdays) {
   document.cookie = `${cname}=${cvalue};${expires};domain=graduation.jj97181818.me;path=/`;
 }
 
+$(document).ready(() => {
+  $('#username').val('');
+  $('#userpassword').val('');
+});
+
 // 登入
 $('#login').click(() => {
   const user = {
@@ -25,7 +30,7 @@ $('#login').click(() => {
       window.location = 'https://graduation.jj97181818.me/';
     },
     error() {
-      alert('Failed to login. Please try once again.');
+      alert('登入失敗，請再試一次');
       window.location.reload();
     }
   });

@@ -108,7 +108,7 @@ function postOrders(list) {
       proccessData: false,
       data: JSON.stringify(order),
       error() {
-        alert('Failed to post order.');
+        alert('訂購失敗');
       }
     });
   });

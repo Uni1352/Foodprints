@@ -61,10 +61,10 @@ function putUserData(loc) {
       proccessData: false,
       data: JSON.stringify(modifiedData),
       success() {
-        alert('Change user data successfully!');
+        alert('修改成功');
       },
       error() {
-        alert('Failed to modify user data.');
+        alert('修改失敗');
       }
     });
   } else if (usertype === 'farmer') {
@@ -75,10 +75,10 @@ function putUserData(loc) {
       proccessData: false,
       data: JSON.stringify(modifiedData),
       success() {
-        alert('Change user data successfully!');
+        alert('修改成功');
       },
       error() {
-        alert('Failed to modify user data.');
+        alert('修改失敗');
       }
     });
   }

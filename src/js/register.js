@@ -28,12 +28,11 @@ function postUserData(loc) {
       proccessData: false,
       data: JSON.stringify(newUser),
       success() {
-        alert('Create account successfully!');
+        alert('建立成功');
         window.location = 'https://graduation.jj97181818.me';
       },
       error() {
-        alert('Failed to create account.');
-        window.location.reload();
+        alert('建立失敗');
       }
     });
   } else if (usertype === 'farmer') {
@@ -44,15 +43,15 @@ function postUserData(loc) {
       proccessData: false,
       data: JSON.stringify(newUser),
       success() {
-        alert('Create account successfully!');
+        alert('建立成功');
         window.location = 'https://graduation.jj97181818.me';
       },
       error() {
-        alert('Failed to create account.');
-        window.location.reload();
+        alert('建立失敗');
       }
     });
   }
+  window.location.reload();
 }
 
 function onSuccess(result) {

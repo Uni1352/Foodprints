@@ -40,14 +40,14 @@ $('#logout').click(() => {
     url: 'https://graduation.jj97181818.me/api/session',
     contentType: 'application/json',
     proccessData: false,
-    success(res) {
-      alert(res.message);
+    success() {
+      alert('登出成功');
       setCookie('userID', '', -1);
       setCookie('userType', '', -1);
       window.location = 'https://graduation.jj97181818.me';
     },
     error() {
-      alert('Failed to logout.');
+      alert('登出失敗');
     }
   });
 });

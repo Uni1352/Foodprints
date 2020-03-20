@@ -11,7 +11,6 @@
 </head>
 
 <body>
-  <!-- TODO: 等登入系統完成後與 member.html 合併 -->
   <header>
     <nav>
       <div class="logo">
@@ -23,17 +22,17 @@
   </header>
   <div class="container" id="loginForm" style="background-image: url('../img/geometry2.png');background-repeat: auto;">
     <div class="container__item" style="width: 50%;margin: 0 auto;">
-      <h2 style="text-align: center;">Login</h2>
+      <h2 style="text-align: center;">登入</h2>
       <form>
         <span style="margin-bottom: 10px">
-          <span><input type="radio" name="usertype" value="restaurant" checked>Restaurant</span>
-          <span><input type="radio" name="usertype" value="farmer">Farmer</span>
+          <span><input type="radio" name="usertype" value="restaurant" checked>餐廳</span>
+          <span><input type="radio" name="usertype" value="farmer">小農</span>
         </span>
         <input type="text" name="userName" id="username" placeholder="Your Name">
         <!-- <input type="email" name="userEmail" id="useremail" placeholder="Your E-mail"> -->
         <input type="password" name="userPassword" id="userpassword" placeholder="Your Password">
         <div style="display: flex;justify-content: space-between;">
-          <span>No Account?&nbsp;<a href="./src/pages/register.html">Register</a></span>
+          <span>沒有帳戶？&nbsp;<a href="./src/pages/register.html">註冊</a></span>
           <!-- <span><a href="./forget.html">Forgot?</a></span> -->
         </div>
         <input type="button" value="登入" id="login">

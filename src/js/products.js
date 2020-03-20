@@ -26,9 +26,8 @@ function getVegeItems() {
       appendTableData(req.vegetables);
     })
     .fail(() => {
-      alert('Error!');
-    })
-    .always(() => {});
+      alert('資料讀取失敗');
+    });
 }
 
 $(document).ready(() => {

@@ -53,7 +53,7 @@ function getAllVegetableOnShelf(id) {
       appendVegetablesOnShelf(res.vegetables);
     })
     .fail(() => {
-      alert('Error!');
+      alert('資料讀取失敗');
     });
 }
 
@@ -81,8 +81,7 @@ function postVegetablesOnShelf(veges) {
     proccessData: false,
     data: JSON.stringify(veges),
     error() {
-      alert('Failed to post items.');
-      window.location.reload();
+      alert('上架失敗');
     }
   });
 }
@@ -96,8 +95,7 @@ function putVegetablesOnShelf(id, veges) {
     proccessData: false,
     data: JSON.stringify(veges),
     error() {
-      alert('Failed to put items.');
-      window.location.reload();
+      alert('上架失敗');
     }
   });
 }
@@ -110,8 +108,7 @@ function deleteVegetablesOnShelf(id) {
     contentType: 'application/json',
     proccessData: false,
     error() {
-      alert('Failed to delete items.');
-      window.location.reload();
+      alert('上架失敗');
     }
   });
 }
@@ -175,6 +172,6 @@ $('#shelf').click(() => {
     putVegetablesOnShelf(oldVegetables[indexOfOldVeges].id, newVegetables[indexOfNewVeges]);
   }
 
-  alert('put vegetables on shelf successfully!');
+  alert('上架成功');
   window.location.reload();
 });

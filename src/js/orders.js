@@ -46,7 +46,6 @@ function appendHistoryOrderItems(orders, idnum) {
   });
 }
 
-// TODO: 列表優化
 function appendFinishedRoutes(routes, idnum) {
   $.each(routes, (index, element) => {
     if (element.farmerID === parseInt(idnum, 10)) {
@@ -61,30 +60,30 @@ function appendFinishedRoutes(routes, idnum) {
   });
 }
 
-function getOrders() {
-
-}
-
-$(document).ready(() => {
+function getOrders(type) {
   const userid = getCookie('userID');
-  const usertype = getCookie('userType');
-  // TODO: 定時更新
-  getOrders();
-  if (usertype === 'restaurant') {
+
+  if (type === 'restaurant') {
     $.get('https://graduation.jj97181818.me/api/orders')
       .done((res) => {
         appendHistoryOrderItems(res, userid);
       })
       .fail(() => {
-        alert('Error!');
+        alert('資料讀取失敗');
       });
-  } else if (usertype === 'farmer') {
+  } else if (type === 'farmer') {
     $.get('https://graduation.jj97181818.me/api/routes')
       .done((res) => {
         appendFinishedRoutes(res.routes, userid);
       })
       .fail(() => {
-        alert('Error!');
+        alert('資料讀取失敗');
       });
   }
+}
+
+$(document).ready(() => {
+  const usertype = getCookie('userType');
+
+  getOrders(usertype);
 });
